@@ -1,0 +1,36 @@
+34:[06:20:41] [main/WARN] [ne.mi.fm.lo.FMLConfig/CORE]: Configuration file /home/runner/work/buskohunter/buskohunter/run/config/fml.toml is not correct. Correcting
+51:[06:20:47] [main/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Configuration file /home/runner/work/buskohunter/buskohunter/run/config/forge-common.toml is not correct. Correcting
+56:[06:20:49] [main/ERROR] [minecraft/Settings]: Failed to load properties from file: server.properties
+57:java.nio.file.NoSuchFileException: server.properties
+58:	at java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:92) ~[?:?]
+59:	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:106) ~[?:?]
+60:	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:111) ~[?:?]
+100:[06:20:49] [main/WARN] [minecraft/VanillaPackResourcesBuilder]: Assets URL 'union:/home/runner/work/buskohunter/buskohunter/.gradle/mavenizer/repo/net/minecraftforge/forge/26.3-66.1.0/forge-26.3-66.1.0.jar%230!/assets/.mcassetsroot' uses unexpected schema
+101:[06:20:49] [main/WARN] [minecraft/VanillaPackResourcesBuilder]: Assets URL 'union:/home/runner/work/buskohunter/buskohunter/.gradle/mavenizer/repo/net/minecraftforge/forge/26.3-66.1.0/forge-26.3-66.1.0.jar%230!/data/.mcassetsroot' uses unexpected schema
+109:2026-11-08T06:20:50.885940571Z Server thread ERROR An exception occurred processing Appender DebugFile
+110:org.apache.logging.log4j.core.appender.AppenderLoggingException: java.lang.NoClassDefFoundError: Could not initialize class io.netty.channel.kqueue.Native
+131:Caused by: java.lang.NoClassDefFoundError: Could not initialize class io.netty.channel.kqueue.Native
+154:Caused by: java.lang.ExceptionInInitializerError: Exception java.lang.IllegalStateException: Only supported on OSX/BSD [in thread "Server thread"]
+192:[06:20:54] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] start
+193:[06:20:54] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] hub built in 501 ms, spawn (0.5, -53.0, 10.5)
+194:[06:20:55] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] field FOREST ready in 780 ms, camp (0.5, -52.0, 3.5)
+195:[06:20:55] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] spawned SAKERAN hp 12599.999
+196:[06:20:56] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] field DESERT ready in 559 ms, camp (0.5, -51.0, 3.5)
+197:[06:20:56] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] spawned BARINO hp 14699.999
+198:[06:20:56] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] field VOLCANO ready in 724 ms, camp (0.5, -53.0, 3.5)
+199:[06:20:56] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] spawned JANGRIA hp 16800.0
+200:[06:20:57] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] field SKY ready in 588 ms, camp (0.5, -52.0, 3.5)
+201:[06:20:57] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] spawned BUSAIBER hp 17850.0
+202:[06:20:58] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] field CYBER ready in 1473 ms, camp (0.5, -55.0, 3.5)
+203:[06:20:58] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] spawned BUSKOBA hp 15749.999
+204:[06:21:08] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] sakeran state IDLE pos BlockPos{x=75, y=-53, z=9} alive true
+205:[06:21:08] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] barino state IDLE pos BlockPos{x=71, y=-51, z=-13} alive true
+206:[06:21:08] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] jangria state IDLE pos BlockPos{x=68, y=-54, z=-1} alive true
+207:[06:21:08] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] busaiber state IDLE pos BlockPos{x=76, y=-53, z=9} alive true
+208:[06:21:08] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] buskoba state IDLE pos BlockPos{x=69, y=-56, z=-15} alive true
+209:[06:21:14] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] sakeran after kill: state DEAD carvable true
+210:[06:21:14] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] barino after kill: state DEAD carvable true
+211:[06:21:14] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] jangria after kill: state DEAD carvable true
+212:[06:21:14] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] busaiber after kill: state DEAD carvable true
+213:[06:21:14] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] buskoba after kill: state DEAD carvable true
+214:[06:21:14] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] RESULT OK

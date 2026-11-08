@@ -1,0 +1,234 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Configuration on demand is an incubating feature.
+
+> Configure project :
+Minecraft Maven is up-to-date, took 0:00.616
+
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :slimeLauncherMetadataForForge FROM-CACHE
+
+> Task :runServer
+Slime Launcher setup is up-to-date, took 177ms
+Launching using main class: net.minecraftforge.bootstrap.ForgeBootstrap
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by net.minecraftforge.unsafe.UnsafeHacks (file:/home/runner/.gradle/caches/modules-2/files-2.1/net.minecraftforge/unsafe/0.9.2/33bad02861cabd77c54a8c9d1205e8638bbbbb4f/unsafe-0.9.2.jar)
+WARNING: Please consider reporting this to the maintainers of class net.minecraftforge.unsafe.UnsafeHacks
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by com.sun.jna.Native in module com.sun.jna (jar:file:///home/runner/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna/5.17.0/33d12735bef894440780fce64f9758d420c7bae2/jna-5.17.0.jar!/)
+WARNING: Use --enable-native-access=com.sun.jna to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.jline.nativ.JLineNativeLoader in module org.jline.nativ (jar:file:///home/runner/.gradle/caches/modules-2/files-2.1/org.jline/jline-native/3.25.1/7f58e474f7d94db5bf87b1fddf4fa646475779f2/jline-native-3.25.1.jar!/)
+WARNING: Use --enable-native-access=org.jline.nativ to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+2026-11-08T06:20:41.465599866Z main WARN Advanced terminal features are not available in this environment
+[06:20:41] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: ModLauncher running: args [--gameDir, ., --launchTarget, forge_userdev_server, --mixin.config=buskohunter.mixins.json, --nogui]
+[06:20:41] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: JVM identified as Eclipse Adoptium OpenJDK 64-Bit Server VM 25.0.5+8-LTS
+[06:20:41] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: ModLauncher 10.2.6 starting: java version 25.0.5 by Eclipse Adoptium; OS Linux arch amd64 version 7.0.0-1017-azure
+[06:20:41] [main/WARN] [ne.mi.fm.lo.FMLConfig/CORE]: Configuration file /home/runner/work/buskohunter/buskohunter/run/config/fml.toml is not correct. Correcting
+[06:20:41] [main/INFO] [ne.mi.fm.lo.FMLConfig/CORE]: Incorrect key [earlyWindowSkipGLVersions] was corrected from null to []
+[06:20:41] [main/INFO] [ne.mi.fm.lo.FMLConfig/CORE]: Incorrect key [earlyWindowLogHelpMessage] was corrected from null to true
+[06:20:41] [main/INFO] [ne.mi.fm.lo.FMLConfig/CORE]: Incorrect key [earlyWindowSquir] was corrected from null to false
+[06:20:41] [main/INFO] [ne.mi.fm.lo.FMLConfig/CORE]: Incorrect key [earlyWindowShowCPU] was corrected from null to false
+[06:20:41] [main/INFO] [ne.mi.fm.lo.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forge_userdev_server
+[06:20:41] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=jar:file:///home/runner/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.7/8ab114ac385e6dbdad5efafe28aba4df8120915f/mixin-0.8.7.jar!/ Service=ModLauncher Env=SERVER
+[06:20:42] [main/INFO] [ne.mi.fm.lo.mo.JarInJarDependencyLocator/JAR-JAR]: JarJar Candidated for com.github.LlamaLad7:MixinExtras
+[06:20:42] [main/INFO] [ne.mi.fm.lo.mo.JarInJarDependencyLocator/JAR-JAR]: 	*mixinextras-forge-0.5.4.jar!/META-INF/jars/MixinExtras-0.5.4.jar
+[06:20:42] [main/INFO] [ne.mi.fm.lo.mo.JarInJarDependencyLocator/JAR-JAR]: JarJar Candidated for io.github.llamalad7:mixinextras-forge
+[06:20:42] [main/INFO] [ne.mi.fm.lo.mo.JarInJarDependencyLocator/JAR-JAR]: 	*mixinextras-forge-0.5.4.jar
+[06:20:42] [main/INFO] [ne.mi.fm.lo.mo.JarInJarDependencyLocator/JAR-JAR]: Found 2 dependencies adding them to mods collection
+[06:20:42] [main/INFO] [cp.mo.mo.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forge_userdev_server' with arguments [--gameDir, ., --nogui]
+[06:20:47] [modloading-worker-0/INFO] [ne.mi.co.ForgeMod/FORGEMOD]: Forge mod loading, version 66.1.0, for MC 26.3 with MCP 20260918.230105
+[06:20:47] [modloading-worker-0/INFO] [ne.mi.co.MinecraftForge/FORGE]: MinecraftForge v66.1.0 Initialized
+[06:20:47] [modloading-worker-0/INFO] [BuskoHunter/]: ブスコハンター 起動: 技 105 個
+[06:20:47] [modloading-worker-0/INFO] [ne.mi.co.ForgeMod/FORGEMOD]: Opening jdk.naming.dns/com.sun.jndi.dns to java.naming
+[06:20:47] [main/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Configuration file /home/runner/work/buskohunter/buskohunter/run/config/forge-common.toml is not correct. Correcting
+[06:20:47] [main/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key general was corrected from null to its default, SynchronizedConfig{DataHolder:{}}. 
+[06:20:47] [main/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key general.logLegacyTagWarnings was corrected from null to its default, OFF. 
+[06:20:47] [main/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key general.channelListLimit was corrected from null to its default, 1024. 
+[06:20:48] [Forge Version Check/INFO] [ne.mi.fm.VersionChecker/]: [forge] Starting version check at https://files.minecraftforge.net/net/minecraftforge/forge/promotions_slim.json
+[06:20:49] [main/ERROR] [minecraft/Settings]: Failed to load properties from file: server.properties
+java.nio.file.NoSuchFileException: server.properties
+	at java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:92) ~[?:?]
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:106) ~[?:?]
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:111) ~[?:?]
+	at java.base/sun.nio.fs.UnixFileSystemProvider.newFileChannel(UnixFileSystemProvider.java:213) ~[?:?]
+	at java.base/sun.nio.fs.UnixFileSystemProvider.newByteChannel(UnixFileSystemProvider.java:244) ~[?:?]
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:357) ~[?:?]
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:399) ~[?:?]
+	at java.base/java.nio.file.spi.FileSystemProvider.newInputStream(FileSystemProvider.java:371) ~[?:?]
+	at java.base/java.nio.file.Files.newInputStream(Files.java:154) ~[?:?]
+	at TRANSFORMER/minecraft@26.3/net.minecraft.server.dedicated.Settings.loadFromFile(Settings.java:36) [forge-26.3-66.1.0.jar%230!/:?]
+	at TRANSFORMER/minecraft@26.3/net.minecraft.server.dedicated.DedicatedServerProperties.fromFile(DedicatedServerProperties.java:158) [forge-26.3-66.1.0.jar%230!/:?]
+	at TRANSFORMER/minecraft@26.3/net.minecraft.server.dedicated.DedicatedServerSettings.<init>(DedicatedServerSettings.java:12) [forge-26.3-66.1.0.jar%230!/:?]
+	at TRANSFORMER/minecraft@26.3/net.minecraft.server.Main.main(Main.java:133) [forge-26.3-66.1.0.jar%230!/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[?:?]
+	at SECURE-BOOTSTRAP/net.minecraftforge.fmlloader@26.3-66.1.0/net.minecraftforge.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:96) [fmlloader-26.3-66.1.0.jar!/:?]
+	at SECURE-BOOTSTRAP/net.minecraftforge.fmlloader@26.3-66.1.0/net.minecraftforge.fml.loading.targets.CommonLaunchHandler.lambda$makeService$0(CommonLaunchHandler.java:79) [fmlloader-26.3-66.1.0.jar!/:?]
+	at SECURE-BOOTSTRAP/cpw.mods.modlauncher@10.2.6/cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:84) [modlauncher-10.2.6.jar!/:?]
+	at SECURE-BOOTSTRAP/cpw.mods.modlauncher@10.2.6/cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:104) [modlauncher-10.2.6.jar!/:?]
+	at SECURE-BOOTSTRAP/cpw.mods.modlauncher@10.2.6/cpw.mods.modlauncher.Launcher.run(Launcher.java:151) [modlauncher-10.2.6.jar!/:?]
+	at SECURE-BOOTSTRAP/cpw.mods.modlauncher@10.2.6/cpw.mods.modlauncher.Launcher.main(Launcher.java:110) [modlauncher-10.2.6.jar!/:?]
+	at SECURE-BOOTSTRAP/cpw.mods.modlauncher@10.2.6/cpw.mods.modlauncher.BootstrapEntry.main(BootstrapEntry.java:17) [modlauncher-10.2.6.jar!/:?]
+	at net.minecraftforge.bootstrap@2.1.7/net.minecraftforge.bootstrap.Bootstrap.moduleMain(Bootstrap.java:188) [bootstrap-2.1.8.jar!/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[?:?]
+	at net.minecraftforge.bootstrap.Bootstrap.bootstrapMain(Bootstrap.java:133) [bootstrap-2.1.8.jar:2.1.8]
+	at net.minecraftforge.bootstrap.Bootstrap.start(Bootstrap.java:53) [bootstrap-2.1.8.jar:2.1.8]
+	at net.minecraftforge.bootstrap.ForgeBootstrap.main(ForgeBootstrap.java:19) [bootstrap-2.1.8.jar:2.1.8]
+	at net.minecraftforge.launcher.Main$Launcher.run(Main.java:282) [slime-launcher-0.2.3.jar:0.2.3]
+	at net.minecraftforge.launcher.Main$Launcher.access$000(Main.java:268) [slime-launcher-0.2.3.jar:0.2.3]
+	at net.minecraftforge.launcher.Main.main(Main.java:57) [slime-launcher-0.2.3.jar:0.2.3]
+Transformer Audit:
+  net.minecraft.server.Main
+    REASON: classloading
+  net.minecraft.server.dedicated.DedicatedServerProperties
+    REASON: classloading
+  net.minecraft.server.dedicated.DedicatedServerSettings
+    REASON: classloading
+  net.minecraft.server.dedicated.Settings
+    REASON: classloading
+[06:20:49] [main/INFO] [mojang/MinecraftServicesDiscoveryService]: Environment: Environment[discoveryUrl=https://discovery.minecraftservices.com/minecraft/client, name=PROD]
+[06:20:49] [Forge Version Check/INFO] [ne.mi.fm.VersionChecker/]: [forge] Found status: UP_TO_DATE Current: 66.1.0 Target: null
+[06:20:49] [main/WARN] [minecraft/VanillaPackResourcesBuilder]: Assets URL 'union:/home/runner/work/buskohunter/buskohunter/.gradle/mavenizer/repo/net/minecraftforge/forge/26.3-66.1.0/forge-26.3-66.1.0.jar%230!/assets/.mcassetsroot' uses unexpected schema
+[06:20:49] [main/WARN] [minecraft/VanillaPackResourcesBuilder]: Assets URL 'union:/home/runner/work/buskohunter/buskohunter/.gradle/mavenizer/repo/net/minecraftforge/forge/26.3-66.1.0/forge-26.3-66.1.0.jar%230!/data/.mcassetsroot' uses unexpected schema
+[06:20:49] [Worker-Main-1/INFO] [minecraft/Main]: No existing world data, creating new world
+[06:20:50] [Worker-Main-2/INFO] [minecraft/AdvancementTree]: Loaded 1866 advancements
+[06:20:50] [Server thread/INFO] [minecraft/DedicatedServer]: Starting minecraft server version 26.3
+[06:20:50] [Server thread/INFO] [minecraft/DedicatedServer]: Loading properties
+[06:20:50] [Server thread/INFO] [minecraft/DedicatedServer]: Default game type: SURVIVAL
+[06:20:50] [Server thread/INFO] [minecraft/MinecraftServer]: Generating keypair
+[06:20:50] [Server thread/INFO] [minecraft/DedicatedServer]: Starting Minecraft server on *:25565
+2026-11-08T06:20:50.885940571Z Server thread ERROR An exception occurred processing Appender DebugFile
+org.apache.logging.log4j.core.appender.AppenderLoggingException: java.lang.NoClassDefFoundError: Could not initialize class io.netty.channel.kqueue.Native
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.config.AppenderControl.tryCallAppender(AppenderControl.java:164)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.config.AppenderControl.callAppender0(AppenderControl.java:133)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.config.AppenderControl.callAppenderPreventRecursion(AppenderControl.java:124)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.config.AppenderControl.callAppender(AppenderControl.java:88)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.config.LoggerConfig.callAppenders(LoggerConfig.java:807)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.config.LoggerConfig.processLogEvent(LoggerConfig.java:765)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.config.LoggerConfig.log(LoggerConfig.java:741)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.config.LoggerConfig.log(LoggerConfig.java:650)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.config.AwaitCompletionReliabilityStrategy.log(AwaitCompletionReliabilityStrategy.java:67)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.Logger.logMessage(Logger.java:173)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.slf4j2.impl@2.26.0/org.apache.logging.slf4j.Log4jLogger.log(Log4jLogger.java:374)
+	at SECURE-BOOTSTRAP/io.netty.common@4.2.16.Final/io.netty.util.internal.logging.LocationAwareSlf4JLogger.log(LocationAwareSlf4JLogger.java:46)
+	at SECURE-BOOTSTRAP/io.netty.common@4.2.16.Final/io.netty.util.internal.logging.LocationAwareSlf4JLogger.debug(LocationAwareSlf4JLogger.java:129)
+	at SECURE-BOOTSTRAP/io.netty.transport.classes.kqueue@4.2.16.Final/io.netty.channel.kqueue.KQueue.<clinit>(KQueue.java:54)
+	at TRANSFORMER/minecraft@26.3/net.minecraft.server.network.EventLoopGroupHolder.remote(EventLoopGroupHolder.java:59)
+	at TRANSFORMER/minecraft@26.3/net.minecraft.server.network.ServerConnectionListener.startTcpServerListener(ServerConnectionListener.java:63)
+	at TRANSFORMER/minecraft@26.3/net.minecraft.server.dedicated.DedicatedServer.initServer(DedicatedServer.java:217)
+	at TRANSFORMER/minecraft@26.3/net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:712)
+	at TRANSFORMER/minecraft@26.3/net.minecraft.server.MinecraftServer.lambda$spin$0(MinecraftServer.java:294)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: java.lang.NoClassDefFoundError: Could not initialize class io.netty.channel.kqueue.Native
+	at java.base/java.lang.Class.forName0(Native Method)
+	at java.base/java.lang.Class.forName(Class.java:547)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j@2.26.0/org.apache.logging.log4j.util.LoaderUtil.loadClass(LoaderUtil.java:212)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.pattern.ThrowableExtendedStackTraceRenderer.lambda$static$1(ThrowableExtendedStackTraceRenderer.java:196)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.pattern.ThrowableExtendedStackTraceRenderer$ExtendedContext.loadClass(ThrowableExtendedStackTraceRenderer.java:180)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.pattern.ThrowableExtendedStackTraceRenderer$ExtendedContext.createClassResourceInfoByName(ThrowableExtendedStackTraceRenderer.java:166)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.pattern.ThrowableExtendedStackTraceRenderer$ExtendedContext.ofThrowable(ThrowableExtendedStackTraceRenderer.java:96)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.pattern.ThrowableExtendedStackTraceRenderer$ExtendedContext.access$000(ThrowableExtendedStackTraceRenderer.java:81)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.pattern.ThrowableExtendedStackTraceRenderer.createContext(ThrowableExtendedStackTraceRenderer.java:43)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.pattern.ThrowableExtendedStackTraceRenderer.createContext(ThrowableExtendedStackTraceRenderer.java:34)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.pattern.ThrowableStackTraceRenderer.renderThrowable(ThrowableStackTraceRenderer.java:55)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.pattern.ThrowablePatternConverter.format(ThrowablePatternConverter.java:130)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.layout.PatternLayout$NoFormatPatternSerializer.toSerializable(PatternLayout.java:354)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.layout.PatternLayout.toText(PatternLayout.java:251)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.layout.PatternLayout.encode(PatternLayout.java:237)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.layout.PatternLayout.encode(PatternLayout.java:57)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.appender.AbstractOutputStreamAppender.directEncodeEvent(AbstractOutputStreamAppender.java:227)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.appender.AbstractOutputStreamAppender.tryAppend(AbstractOutputStreamAppender.java:220)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.appender.AbstractOutputStreamAppender.append(AbstractOutputStreamAppender.java:211)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.appender.RollingRandomAccessFileAppender.append(RollingRandomAccessFileAppender.java:395)
+	at SECURE-BOOTSTRAP/org.apache.logging.log4j.core@2.26.0/org.apache.logging.log4j.core.config.AppenderControl.tryCallAppender(AppenderControl.java:160)
+	... 19 more
+Caused by: java.lang.ExceptionInInitializerError: Exception java.lang.IllegalStateException: Only supported on OSX/BSD [in thread "Server thread"]
+	at SECURE-BOOTSTRAP/io.netty.transport.classes.kqueue@4.2.16.Final/io.netty.channel.kqueue.Native.loadNativeLibrary(Native.java:159)
+	at SECURE-BOOTSTRAP/io.netty.transport.classes.kqueue@4.2.16.Final/io.netty.channel.kqueue.Native.<clinit>(Native.java:76)
+	at SECURE-BOOTSTRAP/io.netty.transport.classes.kqueue@4.2.16.Final/io.netty.channel.kqueue.KQueue.<clinit>(KQueue.java:38)
+	... 6 more
+
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::loadLibrary has been called by io.netty.util.internal.NativeLibraryUtil in module io.netty.common (jar:file:///home/runner/.gradle/caches/modules-2/files-2.1/io.netty/netty-common/4.2.16.Final/c2bc7fa5acfa2afc777e944d84f0aa65559cc81e/netty-common-4.2.16.Final.jar!/)
+WARNING: Use --enable-native-access=io.netty.common to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+[06:20:50] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Configuration file ./world/serverconfig/forge-server.toml is not correct. Correcting
+[06:20:50] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key server was corrected from null to its default, SynchronizedConfig{DataHolder:{}}. 
+[06:20:50] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key server.removeErroringBlockEntities was corrected from null to its default, false. 
+[06:20:50] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key server.removeErroringEntities was corrected from null to its default, false. 
+[06:20:50] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key server.fullBoundingBoxLadders was corrected from null to its default, false. 
+[06:20:50] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key server.permissionHandler was corrected from null to its default, forge:default_handler. 
+[06:20:50] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key server.advertiseDedicatedServerToLan was corrected from null to its default, true. 
+[06:20:50] [Server thread/INFO] [minecraft/DedicatedServer]: Preparing level "world"
+[06:20:51] [Server thread/INFO] [minecraft/LoggingLevelLoadListener]: Selecting global world spawn...
+[06:20:54] [Server thread/INFO] [minecraft/LoggingLevelLoadListener]: Loading 0 persistent chunks...
+[06:20:54] [Server thread/INFO] [minecraft/LoggingLevelLoadListener]: Preparing spawn area: 100%
+[06:20:54] [Server thread/INFO] [minecraft/LoggingLevelLoadListener]: Time elapsed: 2937 ms
+[06:20:54] [Server thread/INFO] [minecraft/DedicatedServer]: Done (3.111s)! For help, type "help"
+[06:20:54] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+[06:20:54] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/buskohunter:field_cyber
+[06:20:54] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/buskohunter:sky_field
+[06:20:54] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/buskohunter:field_volcano
+[06:20:54] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/buskohunter:field_desert
+[06:20:54] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/minecraft:the_nether
+[06:20:54] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/buskohunter:hub
+[06:20:54] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/minecraft:the_end
+[06:20:54] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/buskohunter:field_sky
+[06:20:54] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/buskohunter:field_forest
+[06:20:54] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/buskohunter:forest_field
+[06:20:54] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/buskohunter:desert_field
+[06:20:54] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/buskohunter:volcano_field
+[06:20:54] [Server thread/INFO] [ne.mi.se.pe.PermissionAPI/]: Successfully initialized permission handler forge:default_handler
+[06:20:54] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] start
+[06:20:54] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] hub built in 501 ms, spawn (0.5, -53.0, 10.5)
+[06:20:55] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] field FOREST ready in 780 ms, camp (0.5, -52.0, 3.5)
+[06:20:55] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] spawned SAKERAN hp 12599.999
+[06:20:56] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] field DESERT ready in 559 ms, camp (0.5, -51.0, 3.5)
+[06:20:56] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] spawned BARINO hp 14699.999
+[06:20:56] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] field VOLCANO ready in 724 ms, camp (0.5, -53.0, 3.5)
+[06:20:56] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] spawned JANGRIA hp 16800.0
+[06:20:57] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] field SKY ready in 588 ms, camp (0.5, -52.0, 3.5)
+[06:20:57] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] spawned BUSAIBER hp 17850.0
+[06:20:58] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] field CYBER ready in 1473 ms, camp (0.5, -55.0, 3.5)
+[06:20:58] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] spawned BUSKOBA hp 15749.999
+[06:21:08] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] sakeran state IDLE pos BlockPos{x=75, y=-53, z=9} alive true
+[06:21:08] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] barino state IDLE pos BlockPos{x=71, y=-51, z=-13} alive true
+[06:21:08] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] jangria state IDLE pos BlockPos{x=68, y=-54, z=-1} alive true
+[06:21:08] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] busaiber state IDLE pos BlockPos{x=76, y=-53, z=9} alive true
+[06:21:08] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] buskoba state IDLE pos BlockPos{x=69, y=-56, z=-15} alive true
+[06:21:14] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] sakeran after kill: state DEAD carvable true
+[06:21:14] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] barino after kill: state DEAD carvable true
+[06:21:14] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] jangria after kill: state DEAD carvable true
+[06:21:14] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] busaiber after kill: state DEAD carvable true
+[06:21:14] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] buskoba after kill: state DEAD carvable true
+[06:21:14] [Server thread/INFO] [BuskoHunter/]: [SELFTEST] RESULT OK
+[06:21:14] [Server thread/INFO] [minecraft/MinecraftServer]: Stopping server
+[06:21:14] [Server thread/INFO] [minecraft/MinecraftServer]: Saving players
+[06:21:14] [Server thread/INFO] [minecraft/MinecraftServer]: Saving worlds
+[06:21:15] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+[06:21:15] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/buskohunter:field_cyber
+[06:21:16] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/buskohunter:sky_field
+[06:21:16] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/buskohunter:field_volcano
+[06:21:16] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/buskohunter:field_desert
+[06:21:16] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/minecraft:the_nether
+[06:21:16] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/buskohunter:hub
+[06:21:16] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/minecraft:the_end
+[06:21:16] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/buskohunter:field_sky
+[06:21:16] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/buskohunter:field_forest
+[06:21:16] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/buskohunter:forest_field
+[06:21:16] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/buskohunter:desert_field
+[06:21:16] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/buskohunter:volcano_field
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/selftest-1794118834725.json
+
+BUILD SUCCESSFUL in 45s
+4 actionable tasks: 1 executed, 1 from cache, 2 up-to-date

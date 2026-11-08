@@ -1,0 +1,4 @@
+commit=8ef8d30e29357ad35d25095c7b63af821ebe9652
+exit=0
+selftest=1
+clienttest=1
