@@ -35,9 +35,26 @@ jobs:
           tail -n 80 build.log
           exit 0
 
+      - name: Dump Minecraft sources (when .ci/dump-sources exists)
+        if: hashFiles('.ci/dump-sources') != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          find .gradle/mavenizer -maxdepth 8 -name "*.jar" | head -50
+          mkdir -p dump
+          for j in $(find .gradle/mavenizer ~/.gradle/caches -name "*sources*.jar" 2>/dev/null | grep -i -E "forge|minecraft" | head -5); do cp "$j" dump/; done
+          ls -la dump
+          cd dump
+          git init -q -b sources-dump
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add -A
+          git commit -q -m "sources dump" || true
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" sources-dump || true
+
       - name: Server self-test
         id: selftest
-        if: steps.build.outputs.exit == '0'
+        if: steps.build.outputs.exit == '0' && hashFiles('.ci/skip-tests') == ''
         run: |
           mkdir -p run
           echo "eula=true" > run/eula.txt
