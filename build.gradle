@@ -23,7 +23,13 @@ minecraft {
             // 開発環境で Mixin を読ませる（製品版はマニフェストの MixinConfigs で読む）
             args "--mixin.config=${mod_id}.mixins.json"
         }
-        register('client')
+        register('client') {
+            // CI の自動テスト（普段は使わない）
+            if (System.getenv('BH_AUTOTEST')) {
+                systemProperty 'buskohunter.autotest', 'true'
+                args '--quickPlaySingleplayer', 'bhtest'
+            }
+        }
         register('server') {
             args '--nogui'
             // CI の自己診断（普段は false）

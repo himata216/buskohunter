@@ -48,6 +48,30 @@ jobs:
           grep -n -E "SELFTEST|ERROR|Exception|Caused by|WARN.*buskohunter" server.log | head -n 400
           exit 0
 
+      - name: Client auto-test (software rendering)
+        id: clienttest
+        if: steps.selftest.outputs.ok == '1'
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q xvfb imagemagick mesa-utils libgl1-mesa-dri mesa-vulkan-drivers libegl1 > /dev/null
+          mkdir -p run/saves shots
+          rm -rf run/saves/bhtest
+          cp -r run/world run/saves/bhtest
+          rm -f run/saves/bhtest/session.lock
+          printf "onboardAccessibility:false\ntutorialStep:none\nrenderDistance:6\nsimulationDistance:6\nskipMultiplayerWarning:true\njoinedFirstServer:true\nnarrator:0\n" > run/options.txt
+          export LIBGL_ALWAYS_SOFTWARE=1
+          set +e
+          xvfb-run -a -s "-screen 0 1280x720x24" bash -c '
+            (i=0; while true; do sleep 5; i=$((i+1)); import -window root -resize 960x540 -quality 60 shots/shot_$(printf %03d $i).jpg 2>/dev/null; done) &
+            SHOTS=$!
+            BH_AUTOTEST=true timeout 1500 ./gradlew runClient --no-daemon > client.log 2>&1
+            echo "client exit $?"
+            kill $SHOTS
+          '
+          if grep -q "\[AUTOTEST\].*RESULT DONE" client.log; then echo "ok=1" >> "$GITHUB_OUTPUT"; else echo "ok=0" >> "$GITHUB_OUTPUT"; fi
+          grep -n -E "AUTOTEST|ERROR|Exception|Caused by|buskohunter" client.log | head -n 300
+          exit 0
+
       - name: Publish results to ci-results branch
         if: always()
         env:
@@ -56,11 +80,15 @@ jobs:
           mkdir -p ci-out
           cp build.log ci-out/ || true
           cp server.log ci-out/ 2>/dev/null || true
+          cp client.log ci-out/ 2>/dev/null || true
+          mkdir -p ci-out/shots && cp shots/*.jpg ci-out/shots/ 2>/dev/null || true
+          grep -n -E "AUTOTEST|ERROR|Exception|Caused by|buskohunter" client.log 2>/dev/null | head -n 800 > ci-out/client_summary.txt || true
           grep -n -E "SELFTEST|ERROR|Exception|Caused by|WARN.*buskohunter" server.log 2>/dev/null | head -n 600 > ci-out/server_summary.txt || true
           grep -n -E "error:|warning: \[|FAILURE|BUILD (SUCCESSFUL|FAILED)|What went wrong|Exception" build.log | head -n 400 > ci-out/summary.txt || true
           echo "commit=${GITHUB_SHA}" > ci-out/status.txt
           echo "exit=${{ steps.build.outputs.exit }}" >> ci-out/status.txt
           echo "selftest=${{ steps.selftest.outputs.ok }}" >> ci-out/status.txt
+          echo "clienttest=${{ steps.clienttest.outputs.ok }}" >> ci-out/status.txt
           if ls build/libs/*.jar >/dev/null 2>&1; then cp build/libs/*.jar ci-out/; fi
           cd ci-out
           git init -q -b ci-results

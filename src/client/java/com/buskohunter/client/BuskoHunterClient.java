@@ -43,6 +43,7 @@ public final class BuskoHunterClient {
 			Minecraft mc = Minecraft.getInstance();
 			BgmManager.tick(mc);
 			tickPendingResult(mc);
+			ClientAutoTest.tick(mc);
 		});
 		ClientPlayerNetworkEvent.LoggingOut.BUS.addListener(e -> {
 			ClientHunter.reset();
