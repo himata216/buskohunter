@@ -106,6 +106,9 @@ public final class PlayerAnimator {
 	 */
 	public static Pose compute(LivingEntity entity, float ageInTicks, boolean crouching) {
 		Track tr = TRACKS.computeIfAbsent(entity.getId(), id -> new Track());
+		// ディメンションを移ると自分のプレイヤーは作り直され tickCount が 0 に戻る。古い時刻が残っていると構えが出ないので直す
+		if (tr.endedAge > ageInTicks + 1) tr.endedAge = -1000;
+		if (tr.move != null && tr.startAge > ageInTicks + 1) tr.move = null;
 		// 描画状態ごとに別の Pose を返す（同じフレームで何度も描かれても互いに上書きしない）
 		Pose p = new Pose();
 		WeaponType weapon = weaponOf(entity.getMainHandItem());
