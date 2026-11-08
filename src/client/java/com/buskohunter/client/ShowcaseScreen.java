@@ -14,7 +14,8 @@ import org.joml.Vector3f;
 
 /** 自動テスト用：自分のキャラを 4 方向から並べて描く（武器の持ち方の確認）。 */
 public class ShowcaseScreen extends Screen {
-	private static final float[] ANGLES = {90f, 135f, 180f, 270f};
+	/** 体の向き（180 = 正面）。1 フレームに描けるのは 1 体だけなので、1 つずつ撮る。 */
+	public static float angle = 90f;
 
 	public ShowcaseScreen() {
 		super(Component.literal("showcase"));
@@ -36,12 +37,8 @@ public class ShowcaseScreen extends Screen {
 		super.extractRenderState(g, mouseX, mouseY, a);
 		Minecraft mc = Minecraft.getInstance();
 		if (mc.player == null) return;
-		int cols = ANGLES.length;
-		int w = width / cols;
-		int size = Math.min(w, height) * 30 / 100;
-		for (int i = 0; i < cols; i++) {
-			draw(g, mc.player, ANGLES[i], i * w, 4, (i + 1) * w, height - 4, size);
-		}
+		int size = height / 5;
+		draw(g, mc.player, angle, width / 2 - height / 2, 4, width / 2 + height / 2, height - 4, size);
 	}
 
 	private static void draw(GuiGraphicsExtractor g, LivingEntity entity, float bodyRot, int x0, int y0, int x1, int y1, int size) {

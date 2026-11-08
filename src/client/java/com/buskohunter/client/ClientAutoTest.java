@@ -233,8 +233,13 @@ public final class ClientAutoTest {
 				});
 			}
 			var pl = mc.player;
-			if (r == 6) mc.gui.setScreen(new ShowcaseScreen());
-			if (r == 20) shot(mc, "weapon_" + w.id);
+			if (r == 4) {
+				ShowcaseScreen.angle = 90f;
+				mc.gui.setScreen(new ShowcaseScreen());
+			}
+			if (r == 12) shot(mc, "weapon_" + w.id + "_side");
+			if (r == 14) ShowcaseScreen.angle = 145f;
+			if (r == 20) shot(mc, "weapon_" + w.id + "_front");
 			if (r == 22) {
 				mc.gui.setScreen(null);
 				mc.options.setCameraType(net.minecraft.client.CameraType.FIRST_PERSON);
