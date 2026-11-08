@@ -1,0 +1,61 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'eclipse'
+    id 'net.minecraftforge.gradle' version '[7.0.17,8)'
+}
+
+version = mod_version
+group = maven_group
+base.archivesName = mod_id
+
+// Minecraft 26.1 以降は Java 25
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+
+// クライアント専用コードとリソースも同じソースセットに入れる
+sourceSets.main.java.srcDir 'src/client/java'
+sourceSets.main.resources.srcDir 'src/client/resources'
+
+minecraft {
+    runs {
+        configureEach {
+            workingDir = layout.projectDirectory.dir('run')
+            // 開発環境で Mixin を読ませる（製品版はマニフェストの MixinConfigs で読む）
+            args "--mixin.config=${mod_id}.mixins.json"
+        }
+        register('client')
+        register('server') {
+            args '--nogui'
+        }
+    }
+}
+
+repositories {
+    minecraft.mavenizer(it)
+    maven fg.forgeMaven
+    maven fg.minecraftLibsMaven
+    mavenCentral()
+}
+
+dependencies {
+    implementation minecraft.dependency("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.named('processResources', ProcessResources) {
+    var props = [mod_version: mod_version, forge_version: forge_version, minecraft_version: minecraft_version]
+    inputs.properties props
+    filesMatching('META-INF/mods.toml') {
+        expand props
+    }
+}
+
+tasks.named('jar', Jar) {
+    manifest {
+        // 製品版の jar で Mixin を有効にする
+        attributes['MixinConfigs'] = "${mod_id}.mixins.json"
+    }
+}

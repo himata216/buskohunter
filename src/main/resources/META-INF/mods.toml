@@ -1,0 +1,29 @@
+modLoader="javafml"
+loaderVersion="[66,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="buskohunter"
+version="${mod_version}"
+displayName="Busko Hunter (ブスコハンター)"
+logoFile="assets/buskohunter/icon.png"
+authors="ブスコハンター制作チーム"
+description='''
+ブスコたちを狩るモンハン風ボス討伐 MOD。
+集会所でクエストを受注し、準備して、広大なフィールドで大型モンスターを狩る。
+14 種の武器、回避・武器ごとのモーション、部位破壊、怒り・疲労・エリア移動・捕獲、マルチプレイ対応。
+'''
+
+[[dependencies.buskohunter]]
+    modId="forge"
+    mandatory=true
+    versionRange="[66,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.buskohunter]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[26.3,26.4)"
+    ordering="NONE"
+    side="BOTH"

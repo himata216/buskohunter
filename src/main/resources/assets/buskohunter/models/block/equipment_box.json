@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "buskohunter:block/equipment_box_side",
+    "end": "buskohunter:block/equipment_box_top"
+  }
+}

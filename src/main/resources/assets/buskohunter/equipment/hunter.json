@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "buskohunter:hunter"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "buskohunter:hunter"
+      }
+    ]
+  }
+}

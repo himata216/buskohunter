@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "buskohunter:block/hunter_bed_side",
+    "end": "buskohunter:block/hunter_bed_top"
+  }
+}

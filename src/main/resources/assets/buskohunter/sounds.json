@@ -1,0 +1,660 @@
+{
+  "music.hub": {
+    "sounds": [
+      {
+        "name": "buskohunter:music/hub",
+        "stream": true
+      }
+    ]
+  },
+  "music.prepare": {
+    "sounds": [
+      {
+        "name": "buskohunter:music/prepare",
+        "stream": true
+      }
+    ]
+  },
+  "music.depart": {
+    "sounds": [
+      {
+        "name": "buskohunter:music/depart",
+        "stream": true
+      }
+    ]
+  },
+  "music.field": {
+    "sounds": [
+      {
+        "name": "buskohunter:music/field",
+        "stream": true
+      }
+    ]
+  },
+  "music.battle_sakeran": {
+    "sounds": [
+      {
+        "name": "buskohunter:music/battle_sakeran",
+        "stream": true
+      }
+    ]
+  },
+  "music.battle_barino": {
+    "sounds": [
+      {
+        "name": "buskohunter:music/battle_barino",
+        "stream": true
+      }
+    ]
+  },
+  "music.battle_jangria": {
+    "sounds": [
+      {
+        "name": "buskohunter:music/battle_jangria",
+        "stream": true
+      }
+    ]
+  },
+  "music.battle_busaiber": {
+    "sounds": [
+      {
+        "name": "buskohunter:music/battle_busaiber",
+        "stream": true
+      }
+    ]
+  },
+  "music.battle_buskoba": {
+    "sounds": [
+      {
+        "name": "buskohunter:music/battle_buskoba",
+        "stream": true
+      }
+    ]
+  },
+  "music.clear": {
+    "sounds": [
+      {
+        "name": "buskohunter:music/clear",
+        "stream": true
+      }
+    ]
+  },
+  "music.failed": {
+    "sounds": [
+      {
+        "name": "buskohunter:music/failed",
+        "stream": true
+      }
+    ]
+  },
+  "music.result": {
+    "sounds": [
+      {
+        "name": "buskohunter:music/result",
+        "stream": true
+      }
+    ]
+  },
+  "weapon.swing_light": {
+    "subtitle": "subtitles.buskohunter.weapon.swing_light",
+    "sounds": [
+      "buskohunter:sfx/weapon/swing_light_1",
+      "buskohunter:sfx/weapon/swing_light_2",
+      "buskohunter:sfx/weapon/swing_light_3"
+    ]
+  },
+  "weapon.swing_heavy": {
+    "subtitle": "subtitles.buskohunter.weapon.swing_heavy",
+    "sounds": [
+      "buskohunter:sfx/weapon/swing_heavy_1",
+      "buskohunter:sfx/weapon/swing_heavy_2",
+      "buskohunter:sfx/weapon/swing_heavy_3"
+    ]
+  },
+  "weapon.swing_blunt": {
+    "subtitle": "subtitles.buskohunter.weapon.swing_blunt",
+    "sounds": [
+      "buskohunter:sfx/weapon/swing_blunt"
+    ]
+  },
+  "weapon.hit_slash": {
+    "subtitle": "subtitles.buskohunter.weapon.hit_slash",
+    "sounds": [
+      "buskohunter:sfx/weapon/hit_slash_1",
+      "buskohunter:sfx/weapon/hit_slash_2",
+      "buskohunter:sfx/weapon/hit_slash_3"
+    ]
+  },
+  "weapon.hit_blunt": {
+    "subtitle": "subtitles.buskohunter.weapon.hit_blunt",
+    "sounds": [
+      "buskohunter:sfx/weapon/hit_blunt_1",
+      "buskohunter:sfx/weapon/hit_blunt_2",
+      "buskohunter:sfx/weapon/hit_blunt_3"
+    ]
+  },
+  "weapon.hit_pierce": {
+    "subtitle": "subtitles.buskohunter.weapon.hit_pierce",
+    "sounds": [
+      "buskohunter:sfx/weapon/hit_pierce"
+    ]
+  },
+  "weapon.hit_crit": {
+    "subtitle": "subtitles.buskohunter.weapon.hit_crit",
+    "sounds": [
+      "buskohunter:sfx/weapon/hit_crit"
+    ]
+  },
+  "weapon.hit_weak": {
+    "subtitle": "subtitles.buskohunter.weapon.hit_weak",
+    "sounds": [
+      "buskohunter:sfx/weapon/hit_weak"
+    ]
+  },
+  "weapon.charge": {
+    "subtitle": "subtitles.buskohunter.weapon.charge",
+    "sounds": [
+      "buskohunter:sfx/weapon/charge"
+    ]
+  },
+  "weapon.charge_release": {
+    "subtitle": "subtitles.buskohunter.weapon.charge_release",
+    "sounds": [
+      "buskohunter:sfx/weapon/charge_release"
+    ]
+  },
+  "weapon.guard": {
+    "subtitle": "subtitles.buskohunter.weapon.guard",
+    "sounds": [
+      "buskohunter:sfx/weapon/guard"
+    ]
+  },
+  "weapon.morph": {
+    "subtitle": "subtitles.buskohunter.weapon.morph",
+    "sounds": [
+      "buskohunter:sfx/weapon/morph"
+    ]
+  },
+  "weapon.phial_burst": {
+    "subtitle": "subtitles.buskohunter.weapon.phial_burst",
+    "sounds": [
+      "buskohunter:sfx/weapon/phial_burst"
+    ]
+  },
+  "weapon.spirit": {
+    "subtitle": "subtitles.buskohunter.weapon.spirit",
+    "sounds": [
+      "buskohunter:sfx/weapon/spirit"
+    ]
+  },
+  "weapon.demon_mode": {
+    "subtitle": "subtitles.buskohunter.weapon.demon_mode",
+    "sounds": [
+      "buskohunter:sfx/weapon/demon_mode"
+    ]
+  },
+  "weapon.gunlance_shell": {
+    "subtitle": "subtitles.buskohunter.weapon.gunlance_shell",
+    "sounds": [
+      "buskohunter:sfx/weapon/gunlance_shell"
+    ]
+  },
+  "weapon.gunlance_wyvernfire": {
+    "subtitle": "subtitles.buskohunter.weapon.gunlance_wyvernfire",
+    "sounds": [
+      "buskohunter:sfx/weapon/gunlance_wyvernfire"
+    ]
+  },
+  "weapon.reload": {
+    "subtitle": "subtitles.buskohunter.weapon.reload",
+    "sounds": [
+      "buskohunter:sfx/weapon/reload"
+    ]
+  },
+  "weapon.bowgun_light": {
+    "subtitle": "subtitles.buskohunter.weapon.bowgun_light",
+    "sounds": [
+      "buskohunter:sfx/weapon/bowgun_light"
+    ]
+  },
+  "weapon.bowgun_heavy": {
+    "subtitle": "subtitles.buskohunter.weapon.bowgun_heavy",
+    "sounds": [
+      "buskohunter:sfx/weapon/bowgun_heavy"
+    ]
+  },
+  "weapon.bowgun_gatling": {
+    "subtitle": "subtitles.buskohunter.weapon.bowgun_gatling",
+    "sounds": [
+      "buskohunter:sfx/weapon/bowgun_gatling"
+    ]
+  },
+  "weapon.bow_draw": {
+    "subtitle": "subtitles.buskohunter.weapon.bow_draw",
+    "sounds": [
+      "buskohunter:sfx/weapon/bow_draw"
+    ]
+  },
+  "weapon.bow_release": {
+    "subtitle": "subtitles.buskohunter.weapon.bow_release",
+    "sounds": [
+      "buskohunter:sfx/weapon/bow_release"
+    ]
+  },
+  "weapon.bow_piercer": {
+    "subtitle": "subtitles.buskohunter.weapon.bow_piercer",
+    "sounds": [
+      "buskohunter:sfx/weapon/bow_piercer"
+    ]
+  },
+  "weapon.kinsect": {
+    "subtitle": "subtitles.buskohunter.weapon.kinsect",
+    "sounds": [
+      "buskohunter:sfx/weapon/kinsect"
+    ]
+  },
+  "weapon.horn_note1": {
+    "subtitle": "subtitles.buskohunter.weapon.horn_note1",
+    "sounds": [
+      "buskohunter:sfx/weapon/horn_note1"
+    ]
+  },
+  "weapon.horn_note2": {
+    "subtitle": "subtitles.buskohunter.weapon.horn_note2",
+    "sounds": [
+      "buskohunter:sfx/weapon/horn_note2"
+    ]
+  },
+  "weapon.horn_note3": {
+    "subtitle": "subtitles.buskohunter.weapon.horn_note3",
+    "sounds": [
+      "buskohunter:sfx/weapon/horn_note3"
+    ]
+  },
+  "weapon.horn_song": {
+    "subtitle": "subtitles.buskohunter.weapon.horn_song",
+    "sounds": [
+      "buskohunter:sfx/weapon/horn_song"
+    ]
+  },
+  "weapon.vault": {
+    "subtitle": "subtitles.buskohunter.weapon.vault",
+    "sounds": [
+      "buskohunter:sfx/weapon/vault"
+    ]
+  },
+  "player.dodge": {
+    "subtitle": "subtitles.buskohunter.player.dodge",
+    "sounds": [
+      "buskohunter:sfx/player/dodge"
+    ]
+  },
+  "player.hurt": {
+    "subtitle": "subtitles.buskohunter.player.hurt",
+    "sounds": [
+      "buskohunter:sfx/player/hurt"
+    ]
+  },
+  "player.sharpen": {
+    "subtitle": "subtitles.buskohunter.player.sharpen",
+    "sounds": [
+      "buskohunter:sfx/player/sharpen"
+    ]
+  },
+  "player.drink": {
+    "subtitle": "subtitles.buskohunter.player.drink",
+    "sounds": [
+      "buskohunter:sfx/player/drink"
+    ]
+  },
+  "player.heal": {
+    "subtitle": "subtitles.buskohunter.player.heal",
+    "sounds": [
+      "buskohunter:sfx/player/heal"
+    ]
+  },
+  "player.eat": {
+    "subtitle": "subtitles.buskohunter.player.eat",
+    "sounds": [
+      "buskohunter:sfx/player/eat"
+    ]
+  },
+  "player.buff": {
+    "subtitle": "subtitles.buskohunter.player.buff",
+    "sounds": [
+      "buskohunter:sfx/player/buff"
+    ]
+  },
+  "player.faint": {
+    "subtitle": "subtitles.buskohunter.player.faint",
+    "sounds": [
+      "buskohunter:sfx/player/faint"
+    ]
+  },
+  "player.cart": {
+    "subtitle": "subtitles.buskohunter.player.cart",
+    "sounds": [
+      "buskohunter:sfx/player/cart"
+    ]
+  },
+  "player.carve": {
+    "subtitle": "subtitles.buskohunter.player.carve",
+    "sounds": [
+      "buskohunter:sfx/player/carve"
+    ]
+  },
+  "item.paintball": {
+    "subtitle": "subtitles.buskohunter.item.paintball",
+    "sounds": [
+      "buskohunter:sfx/item/paintball"
+    ]
+  },
+  "item.flash": {
+    "subtitle": "subtitles.buskohunter.item.flash",
+    "sounds": [
+      "buskohunter:sfx/item/flash"
+    ]
+  },
+  "item.trap_set": {
+    "subtitle": "subtitles.buskohunter.item.trap_set",
+    "sounds": [
+      "buskohunter:sfx/item/trap_set"
+    ]
+  },
+  "item.trap_shock": {
+    "subtitle": "subtitles.buskohunter.item.trap_shock",
+    "sounds": [
+      "buskohunter:sfx/item/trap_shock"
+    ]
+  },
+  "item.pitfall": {
+    "subtitle": "subtitles.buskohunter.item.pitfall",
+    "sounds": [
+      "buskohunter:sfx/item/pitfall"
+    ]
+  },
+  "item.tranq": {
+    "subtitle": "subtitles.buskohunter.item.tranq",
+    "sounds": [
+      "buskohunter:sfx/item/tranq"
+    ]
+  },
+  "item.bomb": {
+    "subtitle": "subtitles.buskohunter.item.bomb",
+    "sounds": [
+      "buskohunter:sfx/item/bomb"
+    ]
+  },
+  "item.farcaster": {
+    "subtitle": "subtitles.buskohunter.item.farcaster",
+    "sounds": [
+      "buskohunter:sfx/item/farcaster"
+    ]
+  },
+  "monster.roar_sakeran": {
+    "subtitle": "subtitles.buskohunter.monster.roar_sakeran",
+    "sounds": [
+      "buskohunter:sfx/monster/roar_sakeran"
+    ]
+  },
+  "monster.roar_barino": {
+    "subtitle": "subtitles.buskohunter.monster.roar_barino",
+    "sounds": [
+      "buskohunter:sfx/monster/roar_barino"
+    ]
+  },
+  "monster.roar_jangria": {
+    "subtitle": "subtitles.buskohunter.monster.roar_jangria",
+    "sounds": [
+      "buskohunter:sfx/monster/roar_jangria"
+    ]
+  },
+  "monster.roar_busaiber": {
+    "subtitle": "subtitles.buskohunter.monster.roar_busaiber",
+    "sounds": [
+      "buskohunter:sfx/monster/roar_busaiber"
+    ]
+  },
+  "monster.roar_buskoba": {
+    "subtitle": "subtitles.buskohunter.monster.roar_buskoba",
+    "sounds": [
+      "buskohunter:sfx/monster/roar_buskoba"
+    ]
+  },
+  "monster.step": {
+    "subtitle": "subtitles.buskohunter.monster.step",
+    "sounds": [
+      "buskohunter:sfx/monster/step_1",
+      "buskohunter:sfx/monster/step_2",
+      "buskohunter:sfx/monster/step_3"
+    ]
+  },
+  "monster.slam": {
+    "subtitle": "subtitles.buskohunter.monster.slam",
+    "sounds": [
+      "buskohunter:sfx/monster/slam"
+    ]
+  },
+  "monster.swipe": {
+    "subtitle": "subtitles.buskohunter.monster.swipe",
+    "sounds": [
+      "buskohunter:sfx/monster/swipe"
+    ]
+  },
+  "monster.hurt": {
+    "subtitle": "subtitles.buskohunter.monster.hurt",
+    "sounds": [
+      "buskohunter:sfx/monster/hurt"
+    ]
+  },
+  "monster.down": {
+    "subtitle": "subtitles.buskohunter.monster.down",
+    "sounds": [
+      "buskohunter:sfx/monster/down"
+    ]
+  },
+  "monster.death": {
+    "subtitle": "subtitles.buskohunter.monster.death",
+    "sounds": [
+      "buskohunter:sfx/monster/death"
+    ]
+  },
+  "monster.fire": {
+    "subtitle": "subtitles.buskohunter.monster.fire",
+    "sounds": [
+      "buskohunter:sfx/monster/fire"
+    ]
+  },
+  "monster.beam": {
+    "subtitle": "subtitles.buskohunter.monster.beam",
+    "sounds": [
+      "buskohunter:sfx/monster/beam"
+    ]
+  },
+  "monster.water": {
+    "subtitle": "subtitles.buskohunter.monster.water",
+    "sounds": [
+      "buskohunter:sfx/monster/water"
+    ]
+  },
+  "monster.electric": {
+    "subtitle": "subtitles.buskohunter.monster.electric",
+    "sounds": [
+      "buskohunter:sfx/monster/electric"
+    ]
+  },
+  "monster.holy": {
+    "subtitle": "subtitles.buskohunter.monster.holy",
+    "sounds": [
+      "buskohunter:sfx/monster/holy"
+    ]
+  },
+  "monster.wing": {
+    "subtitle": "subtitles.buskohunter.monster.wing",
+    "sounds": [
+      "buskohunter:sfx/monster/wing"
+    ]
+  },
+  "monster.tired": {
+    "subtitle": "subtitles.buskohunter.monster.tired",
+    "sounds": [
+      "buskohunter:sfx/monster/tired"
+    ]
+  },
+  "monster.sleep": {
+    "subtitle": "subtitles.buskohunter.monster.sleep",
+    "sounds": [
+      "buskohunter:sfx/monster/sleep"
+    ]
+  },
+  "monster.part_break": {
+    "subtitle": "subtitles.buskohunter.monster.part_break",
+    "sounds": [
+      "buskohunter:sfx/monster/part_break"
+    ]
+  },
+  "monster.glitch": {
+    "subtitle": "subtitles.buskohunter.monster.glitch",
+    "sounds": [
+      "buskohunter:sfx/monster/glitch"
+    ]
+  },
+  "monster.bottle": {
+    "subtitle": "subtitles.buskohunter.monster.bottle",
+    "sounds": [
+      "buskohunter:sfx/monster/bottle"
+    ]
+  },
+  "status.poison": {
+    "subtitle": "subtitles.buskohunter.status.poison",
+    "sounds": [
+      "buskohunter:sfx/status/poison"
+    ]
+  },
+  "status.sleep": {
+    "subtitle": "subtitles.buskohunter.status.sleep",
+    "sounds": [
+      "buskohunter:sfx/status/sleep"
+    ]
+  },
+  "status.paralysis": {
+    "subtitle": "subtitles.buskohunter.status.paralysis",
+    "sounds": [
+      "buskohunter:sfx/status/paralysis"
+    ]
+  },
+  "status.blast": {
+    "subtitle": "subtitles.buskohunter.status.blast",
+    "sounds": [
+      "buskohunter:sfx/status/blast"
+    ]
+  },
+  "status.buskoba": {
+    "subtitle": "subtitles.buskohunter.status.buskoba",
+    "sounds": [
+      "buskohunter:sfx/status/buskoba"
+    ]
+  },
+  "status.stun": {
+    "subtitle": "subtitles.buskohunter.status.stun",
+    "sounds": [
+      "buskohunter:sfx/status/stun"
+    ]
+  },
+  "element.fire": {
+    "subtitle": "subtitles.buskohunter.element.fire",
+    "sounds": [
+      "buskohunter:sfx/element/fire"
+    ]
+  },
+  "element.water": {
+    "subtitle": "subtitles.buskohunter.element.water",
+    "sounds": [
+      "buskohunter:sfx/element/water"
+    ]
+  },
+  "element.thunder": {
+    "subtitle": "subtitles.buskohunter.element.thunder",
+    "sounds": [
+      "buskohunter:sfx/element/thunder"
+    ]
+  },
+  "element.ice": {
+    "subtitle": "subtitles.buskohunter.element.ice",
+    "sounds": [
+      "buskohunter:sfx/element/ice"
+    ]
+  },
+  "element.dragon": {
+    "subtitle": "subtitles.buskohunter.element.dragon",
+    "sounds": [
+      "buskohunter:sfx/element/dragon"
+    ]
+  },
+  "ui.select": {
+    "subtitle": "subtitles.buskohunter.ui.select",
+    "sounds": [
+      "buskohunter:ui/select"
+    ]
+  },
+  "ui.confirm": {
+    "subtitle": "subtitles.buskohunter.ui.confirm",
+    "sounds": [
+      "buskohunter:ui/confirm"
+    ]
+  },
+  "ui.back": {
+    "subtitle": "subtitles.buskohunter.ui.back",
+    "sounds": [
+      "buskohunter:ui/back"
+    ]
+  },
+  "ui.open": {
+    "subtitle": "subtitles.buskohunter.ui.open",
+    "sounds": [
+      "buskohunter:ui/open"
+    ]
+  },
+  "ui.accept": {
+    "subtitle": "subtitles.buskohunter.ui.accept",
+    "sounds": [
+      "buskohunter:ui/accept"
+    ]
+  },
+  "ui.error": {
+    "subtitle": "subtitles.buskohunter.ui.error",
+    "sounds": [
+      "buskohunter:ui/error"
+    ]
+  },
+  "ui.reward": {
+    "subtitle": "subtitles.buskohunter.ui.reward",
+    "sounds": [
+      "buskohunter:ui/reward"
+    ]
+  },
+  "quest.start": {
+    "subtitle": "subtitles.buskohunter.quest.start",
+    "sounds": [
+      "buskohunter:quest/start"
+    ]
+  },
+  "quest.area": {
+    "subtitle": "subtitles.buskohunter.quest.area",
+    "sounds": [
+      "buskohunter:quest/area"
+    ]
+  },
+  "quest.alert": {
+    "subtitle": "subtitles.buskohunter.quest.alert",
+    "sounds": [
+      "buskohunter:quest/alert"
+    ]
+  },
+  "quest.timer": {
+    "subtitle": "subtitles.buskohunter.quest.timer",
+    "sounds": [
+      "buskohunter:quest/timer"
+    ]
+  }
+}

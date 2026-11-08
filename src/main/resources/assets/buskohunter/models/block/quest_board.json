@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "buskohunter:block/quest_board_front",
+    "end": "buskohunter:block/quest_board_side"
+  }
+}
