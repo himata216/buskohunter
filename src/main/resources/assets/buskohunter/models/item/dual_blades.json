@@ -591,9 +591,9 @@
  "display": {
   "thirdperson_righthand": {
    "rotation": [
-    0,
-    -90,
-    10
+    -10.0,
+    -90.0,
+    0.0
    ],
    "translation": [
     0.0,
@@ -608,9 +608,9 @@
   },
   "thirdperson_lefthand": {
    "rotation": [
-    0,
-    90,
-    -10
+    -10.0,
+    90.0,
+    -0.0
    ],
    "translation": [
     -0.0,
@@ -625,9 +625,9 @@
   },
   "firstperson_righthand": {
    "rotation": [
-    0,
-    -90,
-    -20
+    20.0,
+    -90.0,
+    0.0
    ],
    "translation": [
     1.13,
@@ -642,9 +642,9 @@
   },
   "firstperson_lefthand": {
    "rotation": [
-    0,
-    90,
-    20
+    20.0,
+    90.0,
+    -0.0
    ],
    "translation": [
     -1.13,

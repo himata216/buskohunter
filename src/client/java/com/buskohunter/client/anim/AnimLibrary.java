@@ -419,7 +419,7 @@ public final class AnimLibrary {
 			}
 			case INSECT_GLAIVE -> p.arms(-45 * DEG + breath, -25 * DEG, 0, -40 * DEG + breath, 40 * DEG, 0);
 			case LIGHT_BOWGUN, HEAVY_BOWGUN -> aim(p, 0, 0);
-			case BOW -> p.arms(-20 * DEG + breath, 0, 5 * DEG, -60 * DEG + breath, 10 * DEG, 0);
+			case BOW -> p.arms(-75 * DEG + breath, -8 * DEG, 0, -45 * DEG + breath, 20 * DEG, 0);
 		}
 	}
 }

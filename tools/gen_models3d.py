@@ -155,6 +155,40 @@ def transform_for(rot, scale, grip_model, target):
     return {"rotation": list(rot), "translation": t, "scale": [round(scale, 4)] * 3}
 
 
+def euler_from_axes(xdir, ydir):
+    """モデルの X 軸・Y 軸がフレームのどちらを向くかから、XYZ 順の回転角（度）を求める。"""
+    def norm(v):
+        l = math.sqrt(sum(c * c for c in v))
+        return [c / l for c in v]
+    x = norm(xdir)
+    y = norm(ydir)
+    # y を x に直交させる
+    d = sum(x[i] * y[i] for i in range(3))
+    y = norm([y[i] - d * x[i] for i in range(3)])
+    z = [x[1] * y[2] - x[2] * y[1], x[2] * y[0] - x[0] * y[2], x[0] * y[1] - x[1] * y[0]]
+    R = [[x[0], y[0], z[0]], [x[1], y[1], z[1]], [x[2], y[2], z[2]]]
+    b = math.asin(max(-1.0, min(1.0, R[0][2])))
+    if abs(R[0][2]) < 0.9999:
+        a = math.atan2(-R[1][2], R[2][2])
+        c = math.atan2(-R[0][1], R[0][0])
+    else:
+        a = math.atan2(R[2][1], R[1][1])
+        c = 0.0
+    rot = (round(math.degrees(a), 3), round(math.degrees(b), 3), round(math.degrees(c), 3))
+    # 検算
+    Rc = rot_xyz(*rot)
+    for col, want in ((0, x), (1, y), (2, z)):
+        got = apply(Rc, [1 if i == col else 0 for i in range(3)])
+        assert all(abs(got[i] - want[i]) < 1e-3 for i in range(3)), (rot, col, got, want)
+    return rot
+
+
+def theta_rot(theta):
+    """武器の長い向き（モデル Y）を、腕を下ろした時の「前」から腕の向き（下）へ theta 度倒す。モデル X は刃の上側。"""
+    t = math.radians(theta)
+    return euler_from_axes((0, math.sin(t), math.cos(t)), (0, math.cos(t), -math.sin(t)))
+
+
 def center_transform(rot, scale, center_model):
     R = rot_xyz(*rot)
     p = [(center_model[i] - 8) / 16 * scale for i in range(3)]
@@ -191,7 +225,9 @@ def fit(boxes, limit=46.0):
     return k
 
 
-def weapon_model(name, boxes, length_blocks, grip=(0, 0, 0), tp_rot=(0, -90, 10), fp_rot=(0, -90, -20), gui_extra=1.0):
+def weapon_model(name, boxes, length_blocks, grip=(0, 0, 0), theta=10, theta_fp=-20, gui_extra=1.0):
+    tp_rot = theta_rot(theta)
+    fp_rot = theta_rot(theta_fp)
     lo, hi = bounds(boxes)
     ext = max(hi[i] - lo[i] for i in range(3))
     scale = length_blocks * 16 / ext
@@ -310,7 +346,7 @@ def lance():
     b += [box(-1.9, 11.5, -1.9, 1.9, 22, 1.9, "steel"), box(-1.4, 22, -1.4, 1.4, 31, 1.4, "steel_light")]
     b += [box(-0.8, 31, -0.8, 0.8, 35.5, 0.8, "steel_light"), box(-0.35, 35.5, -0.35, 0.35, 37.5, 0.35, "steel")]
     b += [cbox(0, 16, 0, 4.2, 1.2, 4.2, "gold"), cbox(0, 24, 0, 3.2, 1, 3.2, "gold")]
-    weapon_model("lance", b, 2.0)
+    weapon_model("lance", b, 2.0, theta=70, theta_fp=60)
 
 
 def gunlance():
@@ -321,7 +357,7 @@ def gunlance():
     b += [box(-1.6, 31, -1.2, 1.6, 34, 1.2, "steel_light"), box(-0.7, 34, -0.8, 0.7, 36.5, 0.8, "steel")]
     b += [box(2.4, 8, -1.3, 5.0, 29, 1.3, "iron_black"), cbox(3.7, 29.5, 0, 3.2, 1.6, 3.0, "steel_dark")]       # 砲身
     b += [cbox(3.7, 12, 0, 3.4, 1, 3.2, "gold"), cbox(3.7, 22, 0, 3.4, 1, 3.2, "gold")]
-    weapon_model("gunlance", b, 1.9)
+    weapon_model("gunlance", b, 1.9, theta=70, theta_fp=60)
 
 
 def switch_axe():
@@ -363,7 +399,7 @@ def light_bowgun():
     b += [box(-6, -2.5, -0.9, -2.2, -0.5, 0.9, "leather", rot=("z", -15, (-2.2, -1.5, 0)))]              # グリップ
     b += [box(2.8, 0, -0.6, 4.0, 6, 0.6, "iron_black"), cbox(3.4, 6.3, 0, 1.6, 1, 1.6, "gem_blue")]        # 照準
     b += [box(-4.5, 3, -0.9, -2.2, 6, 0.9, "steel")]                                                     # 弾倉
-    weapon_model("light_bowgun", b, 1.1, grip=(-4.2, -1.4, 0))
+    weapon_model("light_bowgun", b, 1.1, grip=(-4.2, -1.4, 0), theta=90, theta_fp=90)
 
 
 def heavy_bowgun():
@@ -374,7 +410,7 @@ def heavy_bowgun():
     b += [box(-2.4, -16, -1.8, 3.0, -6, 1.8, "wood_dark"), box(-3, -16, -2, 3.6, -14, 2, "leather_dark")]
     b += [box(-8, -4.5, -1.1, -3.4, -2, 1.1, "leather", rot=("z", -12, (-3.4, -3, 0)))]
     b += [box(4.6, -2, -0.9, 6.4, 6, 0.9, "iron_black"), cbox(5.5, 6.5, 0, 2, 1.2, 2, "gem_red")]
-    weapon_model("heavy_bowgun", b, 1.5, grip=(-5.6, -3.0, 0))
+    weapon_model("heavy_bowgun", b, 1.5, grip=(-5.6, -3.0, 0), theta=90, theta_fp=90)
 
 
 def bow():
@@ -387,7 +423,7 @@ def bow():
         b += [cbox(16.6 * sgn, -3.8, 0, 1.2, 1.2, 1.2, "gold")]
     b += [box(-16.4, -4.6, -0.12, 16.4, -4.3, 0.12, "string")]                                                   # 弦
     b += [cbox(0, 1.6, 1.1, 1, 1, 0.6, "gem_green")]
-    weapon_model("bow", b, 1.4, grip=(0, 0, 0))
+    weapon_model("bow", b, 1.4, grip=(0, 0, 0), theta=90, theta_fp=80)
 
 
 # ---------------------------------------------------------------------------
@@ -415,10 +451,10 @@ def euler_for(cols):
     raise ValueError(cols)
 
 
-def offhand_model(name, boxes, scale, anchor, target_px, cols=((1, 0, 0), (0, 1, 0), (0, 0, 1)), gui_rot=(22, 32, 0)):
+def offhand_model(name, boxes, scale, anchor, target_px, xdir, ydir, gui_rot=(22, 32, 0)):
     """左腕に付ける飾り。anchor（モデル座標）を、左腕フレームの target_px（肩が原点、px）に置く。
-    cols はモデルの X, Y, Z 軸がフレームのどちらを向くか。"""
-    rot = euler_for(cols)
+    xdir・ydir はモデルの X 軸・Y 軸がフレーム（腕を下ろした時：+Y 前, +Z 上, +X キャラの右）のどちらを向くか。"""
+    rot = euler_from_axes(xdir, ydir)
     lo, hi = bounds(boxes)
     center = [(lo[i] + hi[i]) / 2 for i in range(3)]
     off = [round((8 - center[i]) * 2) / 2 for i in range(3)]
@@ -444,17 +480,29 @@ def offhand_model(name, boxes, scale, anchor, target_px, cols=((1, 0, 0), (0, 1,
     write(f"{A}/models/item/{name}.json", model)
 
 
+def stance_axes(alpha):
+    """腕を前に alpha 度上げた構えで、世界の「前」と「上」になるフレームの向き。"""
+    t = math.radians(alpha)
+    fwd = (0, math.cos(t), -math.sin(t))
+    up = (0, math.sin(t), math.cos(t))
+    return fwd, up
+
+
 def shields():
-    # 盾の板は Y-Z 面（前と上へ広がる）。飾りは -X（キャラの左＝腕の外側）に付く。
-    # 腕（4px 幅）の外側の面はフレームの x = -3。前腕の真ん中あたり（z = -6）に付ける。
-    small = [box(-0.8, -5, -6, 0.8, 5, 6, "tint"), box(-1.2, -5.5, -6.5, -0.8, 5.5, 6.5, "steel_dark"), cbox(-1.6, 0, 0, 0.8, 3, 3, "gold")]
-    offhand_model("disp_shield_small", small, 1.0, (0.8, 0, 0), (-3.3, 0.5, -6.5))
-    large = [box(-1.2, -7.5, -11, 1.2, 7.5, 11, "tint"), box(-1.8, -8, -11.5, -1.2, 8, 11.5, "steel_dark"), box(-2.2, -1, -9, -1.8, 1, 9, "gold"),
-             box(-2.2, -6, -1, -1.8, 6, 1, "gold")]
-    offhand_model("disp_shield_large", large, 1.0, (1.2, 0, 0), (-3.3, 1.0, -6.0))
-    cb = [box(-1, -6, -8, 1, 6, 8, "tint"), box(-1.5, -6.5, -8.5, -1, 6.5, 8.5, "steel_dark"), box(-1.2, 6, -6, 0.6, 9.5, 6, "steel_light"),
-          cbox(-1.8, 0, 0, 0.6, 3.4, 3.4, "glass", emit=10)]
-    offhand_model("disp_shield_cb", cb, 1.0, (1.0, 0, 0), (-3.3, 0.5, -6.5))
+    # 盾は握り手で持つ（拳の先に、構えた時に正面を向く）。板はモデルの X-Y 面、表は +Z。
+    # 構え（左腕を 65〜70 度前へ上げる）で、表が前・モデル Y が上になるように向ける
+    fwd, up = stance_axes(68)
+    side = (-1, 0, 0)
+    grip = (-1.0, 0.0, -11.0)  # 左手の先（肩から 11px 下、腕の中心）
+    small = [box(-6, -6, -0.8, 6, 6, 0.8, "tint"), box(-6.6, -6.6, -1.3, 6.6, 6.6, -0.8, "steel_dark"),
+             cbox(0, 0, 1.2, 3, 3, 0.8, "gold"), box(-0.6, -5.6, 0.8, 0.6, 5.6, 1.1, "tint_dark"), box(-5.6, -0.6, 0.8, 5.6, 0.6, 1.1, "tint_dark")]
+    offhand_model("disp_shield_small", small, 1.0, (0, 0, -1.3), grip, side, up)
+    large = [box(-8, -12, -1.2, 8, 12, 1.2, "tint"), box(-8.6, -12.6, -1.8, 8.6, 12.6, -1.2, "steel_dark"),
+             box(-1, -10, 1.2, 1, 10, 1.7, "gold"), box(-6, -1, 1.2, 6, 1, 1.7, "gold"), cbox(0, 0, 2.0, 4, 4, 0.8, "tint_dark")]
+    offhand_model("disp_shield_large", large, 1.0, (0, -2, -1.8), grip, side, up)
+    cb = [box(-6.5, -9, -1, 6.5, 9, 1, "tint"), box(-7, -9.5, -1.5, 7, 9.5, -1, "steel_dark"), box(-6, 9, -0.8, 6, 12, 0.8, "steel_light"),
+          cbox(0, 0, 1.4, 3.4, 3.4, 0.8, "glass", emit=10), box(-0.6, -8, 1, 0.6, 8, 1.3, "gold")]
+    offhand_model("disp_shield_cb", cb, 1.0, (0, -1, -1.5), grip, side, up)
 
 
 def bug_boxes():
@@ -468,9 +516,11 @@ def bug_boxes():
 
 
 def kinsect_perch():
-    # 腕の外側にとまる猟虫：頭（+Z）は前（フレーム +Y）、背中（+Y）は腕の外（フレーム -X）
-    # → モデル X はフレーム -Z（下）
-    offhand_model("disp_kinsect", bug_boxes(), 0.75, (0, -1.2, 0), (-3.0, 0.5, -6.0), cols=((0, 0, -1), (-1, 0, 0), (0, 1, 0)))
+    # 腕の外側にとまる猟虫：構え（左腕を 40 度前へ）で頭（モデル +Z）が前、背中（+Y）が腕の外（フレーム -X）
+    fwd, up = stance_axes(40)
+    back = (-1, 0, 0)
+    x = (back[1] * fwd[2] - back[2] * fwd[1], back[2] * fwd[0] - back[0] * fwd[2], back[0] * fwd[1] - back[1] * fwd[0])
+    offhand_model("disp_kinsect", bug_boxes(), 0.75, (0, -1.2, 0), (-3.1, 0.0, -7.0), x, back)
 
 
 # ---------------------------------------------------------------------------

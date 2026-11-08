@@ -181,7 +181,7 @@ public final class ClientAutoTest {
 	// =====================================================================
 	private static final int HUB_VIEWS = 4;
 	private static final int VIEW_TICKS = 90;
-	private static final int WEAPON_TICKS = 60;
+	private static final int WEAPON_TICKS = 40;
 	private static final int FIELD_TICKS = 260;
 	private static final com.buskohunter.core.FieldType[] TOUR_FIELDS = {
 		com.buskohunter.core.FieldType.FOREST, com.buskohunter.core.FieldType.DESERT,
@@ -228,32 +228,25 @@ public final class ClientAutoTest {
 					ServerLevel hub = p.level().getServer().getLevel(com.buskohunter.quest.Dims.HUB);
 					if (hub == null) return;
 					int y = com.buskohunter.quest.WorldBuilder.hubFloorY(hub);
-					if (p.level() != hub || p.distanceToSqr(0.5, y, 6.5) > 1) p.teleportTo(hub, 0.5, y, 6.5, java.util.Set.of(), 180f, 0f, true);
+					if (p.level() != hub || p.distanceToSqr(0.5, y, 13.5) > 1) p.teleportTo(hub, 0.5, y, 13.5, java.util.Set.of(), 180f, 0f, true);
 					p.setItemSlot(net.minecraft.world.entity.EquipmentSlot.MAINHAND, com.buskohunter.registry.ModItems.WEAPONS.get(w).create(e));
 				});
 			}
 			var pl = mc.player;
-			if (pl != null && (r == 2 || r == 22)) {
-				// 正面から見るカメラで、頭だけ少し横に向けて斜め前から写す
-				mc.options.setCameraType(net.minecraft.client.CameraType.THIRD_PERSON_FRONT);
-				float yaw = 180f + (r == 2 ? 40f : -40f);
-				pl.setYRot(yaw);
-				pl.setYHeadRot(yaw);
-				pl.yBodyRot = 180f;
-				pl.yBodyRotO = 180f;
-				pl.setXRot(12f);
-			}
-			if (r == 18) shot(mc, "weapon_" + w.id + "_r");
-			if (r == 38) shot(mc, "weapon_" + w.id + "_l");
-			if (r == 41) {
+			if (r == 6) mc.gui.setScreen(new ShowcaseScreen());
+			if (r == 20) shot(mc, "weapon_" + w.id);
+			if (r == 22) {
+				mc.gui.setScreen(null);
 				mc.options.setCameraType(net.minecraft.client.CameraType.FIRST_PERSON);
+				if (mc.gui.hud.isHidden()) mc.gui.hud.toggle();
 				if (pl != null) {
 					pl.setYRot(180f);
 					pl.setYHeadRot(180f);
 					pl.setXRot(10f);
 				}
 			}
-			if (r == 56) shot(mc, "weapon_" + w.id + "_fp");
+			if (r == 36) shot(mc, "weapon_" + w.id + "_fp");
+			if (r == 38 && !mc.gui.hud.isHidden()) mc.gui.hud.toggle();
 			return;
 		}
 		k -= ws.length * WEAPON_TICKS;
