@@ -520,7 +520,7 @@ def kinsect_perch():
     fwd, up = stance_axes(40)
     back = (-1, 0, 0)
     x = (back[1] * fwd[2] - back[2] * fwd[1], back[2] * fwd[0] - back[0] * fwd[2], back[0] * fwd[1] - back[1] * fwd[0])
-    offhand_model("disp_kinsect", bug_boxes(), 0.75, (0, -1.2, 0), (-3.1, 0.0, -7.0), x, back)
+    offhand_model("disp_kinsect", bug_boxes(), 1.0, (0, -1.2, 0), (-3.1, 0.0, -7.0), x, back)
 
 
 # ---------------------------------------------------------------------------
