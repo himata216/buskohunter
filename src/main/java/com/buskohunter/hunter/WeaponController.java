@@ -325,7 +325,7 @@ public final class WeaponController {
 		WeaponBehaviors.onHit(player, s, m, r, null, 0);
 	}
 
-	static void hitFx(ServerLevel level, ServerPlayer player, HunterState s, Vec3 at, DamageCalc.Result r, MoveDef.Hit h) {
+	public static void hitFx(ServerLevel level, ServerPlayer player, HunterState s, Vec3 at, DamageCalc.Result r, MoveDef.Hit h) {
 		String snd;
 		if (r.bounce()) snd = "weapon.hit_weak";
 		else if (h != null && h.fixedDamage() > 0) snd = "weapon.gunlance_shell";
