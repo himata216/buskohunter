@@ -83,25 +83,25 @@ public class OrientedProjectileRenderer<T extends Entity & ItemSupplier> extends
 		float t = state.ageInTicks;
 		switch (state.spin) {
 			case FLAT_SPIN -> {
-				poseStack.mulPose(Axis.YP.rotationDegrees(t * 36f));
-				poseStack.mulPose(Axis.XP.rotationDegrees(8f * Mth.sin(t * 0.4f)));
+				poseStack.rotateDegrees(Axis.YP, t * 36f);
+				poseStack.rotateDegrees(Axis.XP, 8f * Mth.sin(t * 0.4f));
 			}
 			case TUMBLE -> {
-				poseStack.mulPose(Axis.YP.rotationDegrees(state.yaw));
-				poseStack.mulPose(Axis.XP.rotationDegrees(t * 30f));
-				poseStack.mulPose(Axis.ZP.rotationDegrees(t * 11f));
+				poseStack.rotateDegrees(Axis.YP, state.yaw);
+				poseStack.rotateDegrees(Axis.XP, t * 30f);
+				poseStack.rotateDegrees(Axis.ZP, t * 11f);
 			}
 			case WOBBLE -> {
-				poseStack.mulPose(Axis.YP.rotationDegrees(state.yaw));
-				poseStack.mulPose(Axis.XP.rotationDegrees(-state.pitch));
-				poseStack.mulPose(Axis.ZP.rotationDegrees(t * 18f));
+				poseStack.rotateDegrees(Axis.YP, state.yaw);
+				poseStack.rotateDegrees(Axis.XP, -state.pitch);
+				poseStack.rotateDegrees(Axis.ZP, t * 18f);
 			}
 			default -> {
-				poseStack.mulPose(Axis.YP.rotationDegrees(state.yaw));
-				poseStack.mulPose(Axis.XP.rotationDegrees(-state.pitch));
+				poseStack.rotateDegrees(Axis.YP, state.yaw);
+				poseStack.rotateDegrees(Axis.XP, -state.pitch);
 				if (state.kinsect) {
 					// 羽ばたき風に少し揺らす
-					poseStack.mulPose(Axis.ZP.rotationDegrees(10f * Mth.sin(t * 1.3f)));
+					poseStack.rotateDegrees(Axis.ZP, 10f * Mth.sin(t * 1.3f));
 				}
 			}
 		}

@@ -44,7 +44,7 @@ public class HubLabelRenderer extends EntityRenderer<HubLabel, HubLabelRenderer.
 		if (state.title.isEmpty()) return;
 		Font font = Minecraft.getInstance().font;
 		poseStack.pushPose();
-		poseStack.mulPose(camera.orientation);
+		poseStack.rotate(camera.orientation);
 		float s = 0.025f * state.scale;
 		poseStack.scale(s, -s, s);
 		FormattedCharSequence title = Component.literal(state.title).getVisualOrderText();

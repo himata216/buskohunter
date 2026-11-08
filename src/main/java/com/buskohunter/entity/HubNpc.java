@@ -102,7 +102,7 @@ public class HubNpc extends PathfinderMob {
 	public HubNpc(EntityType<? extends HubNpc> type, Level level) {
 		super(type, level);
 		setPersistenceRequired();
-		setInvulnerable(true);
+		setPermanentlyInvulnerable(true);
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
