@@ -26,6 +26,10 @@ public final class Gfx {
 		return Minecraft.getInstance().font;
 	}
 
+	public static int width(String s) {
+		return font().width(s);
+	}
+
 	public static Identifier tex(String path) {
 		return BuskoHunter.id("textures/" + path + ".png");
 	}

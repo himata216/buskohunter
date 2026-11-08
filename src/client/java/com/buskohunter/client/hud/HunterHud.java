@@ -47,11 +47,12 @@ public final class HunterHud {
 		int w = g.guiWidth();
 		int h = g.guiHeight();
 
+		int vitalsRight = 0;
 		if (quest || weapon) {
-			drawVitals(g, player, quest);
+			vitalsRight = drawVitals(g, player, quest);
 		}
 		if (quest) {
-			drawClock(g, w);
+			drawClock(g, w, vitalsRight);
 			drawMinimap(g, player, w);
 			drawParty(g, player);
 		}
@@ -62,12 +63,13 @@ public final class HunterHud {
 	// ------------------------------------------------------------------
 	// 左上：体力・スタミナ・切れ味・武器
 	// ------------------------------------------------------------------
-	private static void drawVitals(GuiGraphicsExtractor g, LocalPlayer player, boolean quest) {
+	/** @return パネルの右端の X */
+	private static int drawVitals(GuiGraphicsExtractor g, LocalPlayer player, boolean quest) {
 		HunterState s = ClientHunter.STATE;
 		int x = 8, y = 8;
 		float hp = player.getHealth();
 		float maxHp = Math.max(1f, player.getMaxHealth());
-		int barW = (int) Math.min(220, 90 + maxHp * 0.9f);
+		int barW = (int) Math.min(170, 80 + maxHp * 0.6f);
 		Gfx.panel(g, x - 4, y - 4, barW + 66, 60);
 
 		// 武器アイコン
@@ -106,6 +108,7 @@ public final class HunterHud {
 		WeaponGauges.draw(g, bx, y + 39, s);
 		// やられ状態・バフ
 		drawStatus(g, x, y + 58, s);
+		return x - 4 + barW + 66;
 	}
 
 	private static void drawSharpness(GuiGraphicsExtractor g, int x, int y, HunterState s) {
@@ -158,23 +161,37 @@ public final class HunterHud {
 	// ------------------------------------------------------------------
 	// 上中央：時計とクエスト名
 	// ------------------------------------------------------------------
-	private static void drawClock(GuiGraphicsExtractor g, int w) {
+	/** 残り時間と目標。上の段に入らない（画面が狭い）ときはミニマップの下に出す。 */
+	private static void drawClock(GuiGraphicsExtractor g, int w, int vitalsRight) {
 		Payloads.QuestSync q = ClientHunter.QUEST;
 		if (q.questIndex() < 0) return;
 		QuestDef def = QuestDef.byIndex(q.questIndex());
-		int cx = w / 2;
-		Gfx.panel(g, cx - 90, 4, 180, 30);
+		String goal = def.goalText();
+		int pw = Math.max(150, Math.min(220, Gfx.width(goal) + 16));
+		int minimapLeft = w - MINIMAP_SIZE - 11;
+		int top;
+		int cx;
+		if (minimapLeft - vitalsRight >= pw + 8) {
+			cx = (vitalsRight + minimapLeft) / 2;
+			top = 4;
+		} else {
+			cx = w - 8 - pw / 2;
+			top = 8 + MINIMAP_SIZE + 18;
+		}
+		Gfx.panel(g, cx - pw / 2, top, pw, 30);
 		int col = q.timeLeft() < 20 * 60 * 5 ? (System.currentTimeMillis() / 400 % 2 == 0 ? Gfx.RED : Gfx.WHITE) : Gfx.WHITE;
-		Gfx.center(g, "残り " + Gfx.time(q.timeLeft()) + "   力尽き " + q.faints() + "/" + q.maxFaints(), cx, 8, col);
-		Gfx.center(g, def.goalText(), cx, 20, Gfx.GOLD);
+		Gfx.center(g, "残り " + Gfx.time(q.timeLeft()) + "   力尽き " + q.faints() + "/" + q.maxFaints(), cx, top + 4, col);
+		Gfx.center(g, goal, cx, top + 16, Gfx.GOLD);
 	}
+
+	private static final int MINIMAP_SIZE = 110;
 
 	// ------------------------------------------------------------------
 	// 右上：ミニマップ
 	// ------------------------------------------------------------------
 	private static void drawMinimap(GuiGraphicsExtractor g, LocalPlayer player, int screenW) {
 		Payloads.QuestSync q = ClientHunter.QUEST;
-		int size = 110;
+		int size = MINIMAP_SIZE;
 		int mx = screenW - size - 8;
 		int my = 8;
 		Gfx.panel(g, mx - 3, my - 3, size + 6, size + 18);
