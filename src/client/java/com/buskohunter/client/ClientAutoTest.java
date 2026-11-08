@@ -181,12 +181,11 @@ public final class ClientAutoTest {
 	// =====================================================================
 	private static final int HUB_VIEWS = 4;
 	private static final int VIEW_TICKS = 90;
-	private static final int WEAPON_TICKS = 50;
+	private static final int WEAPON_TICKS = 60;
 	private static final int FIELD_TICKS = 260;
 	private static final com.buskohunter.core.FieldType[] TOUR_FIELDS = {
 		com.buskohunter.core.FieldType.FOREST, com.buskohunter.core.FieldType.DESERT,
 		com.buskohunter.core.FieldType.VOLCANO, com.buskohunter.core.FieldType.SKY};
-	private static net.minecraft.world.entity.Entity camEntity;
 
 	private static void shot(Minecraft mc, String name) {
 		net.minecraft.client.Screenshot.grab(mc.gameDirectory, "bh_" + name + ".png", mc.gameRenderer.mainRenderTarget(), 1,
@@ -233,26 +232,28 @@ public final class ClientAutoTest {
 					p.setItemSlot(net.minecraft.world.entity.EquipmentSlot.MAINHAND, com.buskohunter.registry.ModItems.WEAPONS.get(w).create(e));
 				});
 			}
-			if (r == 4 || r == 27) {
-				var pl = mc.player;
+			var pl = mc.player;
+			if (pl != null && (r == 2 || r == 22)) {
+				// 正面から見るカメラで、頭だけ少し横に向けて斜め前から写す
+				mc.options.setCameraType(net.minecraft.client.CameraType.THIRD_PERSON_FRONT);
+				float yaw = 180f + (r == 2 ? 40f : -40f);
+				pl.setYRot(yaw);
+				pl.setYHeadRot(yaw);
+				pl.yBodyRot = 180f;
+				pl.yBodyRotO = 180f;
+				pl.setXRot(12f);
+			}
+			if (r == 18) shot(mc, "weapon_" + w.id + "_r");
+			if (r == 38) shot(mc, "weapon_" + w.id + "_l");
+			if (r == 41) {
+				mc.options.setCameraType(net.minecraft.client.CameraType.FIRST_PERSON);
 				if (pl != null) {
-					if (camEntity == null) camEntity = new com.buskohunter.entity.HubLabel(com.buskohunter.registry.ModEntities.HUB_LABEL, mc.level);
-					double side = r == 4 ? 1 : -1;
-					// プレイヤーは北（-Z）向き。右は +X
-					double cx = pl.getX() + side * 2.3, cz = pl.getZ() - 1.9, cy = pl.getY() + 1.35 - camEntity.getEyeHeight();
-					double tx = pl.getX(), ty = pl.getY() + 1.0, tz = pl.getZ();
-					double dx = tx - cx, dz = tz - cz, dy = ty - (cy + camEntity.getEyeHeight());
-					float yaw = (float) (Math.toDegrees(Math.atan2(dz, dx)) - 90.0);
-					float pitch = (float) -Math.toDegrees(Math.atan2(dy, Math.sqrt(dx * dx + dz * dz)));
-					camEntity.snapTo(cx, cy, cz, yaw, pitch);
-					mc.setCameraEntity(camEntity);
+					pl.setYRot(180f);
+					pl.setYHeadRot(180f);
+					pl.setXRot(10f);
 				}
 			}
-			if (r == 22) shot(mc, "weapon_" + w.id + "_r");
-			if (r == 45) {
-				shot(mc, "weapon_" + w.id + "_l");
-			}
-			if (r == WEAPON_TICKS - 1 && i == ws.length - 1) mc.setCameraEntity(mc.player);
+			if (r == 56) shot(mc, "weapon_" + w.id + "_fp");
 			return;
 		}
 		k -= ws.length * WEAPON_TICKS;
@@ -261,7 +262,7 @@ public final class ClientAutoTest {
 			int i = k / FIELD_TICKS, r = k % FIELD_TICKS;
 			com.buskohunter.core.FieldType f = TOUR_FIELDS[i];
 			if (r == 0) {
-				mc.setCameraEntity(mc.player);
+				mc.options.setCameraType(net.minecraft.client.CameraType.FIRST_PERSON);
 				onServer(p -> {
 					ServerLevel lvl = p.level().getServer().getLevel(com.buskohunter.quest.Dims.field(f));
 					if (lvl == null) {

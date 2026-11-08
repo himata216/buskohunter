@@ -103,7 +103,7 @@ def main():
     # ---- 地物 ----
     tree_feature("hunt_forest_trees", "minecraft:trees_birch_and_oak_leaf_litter", weighted((1, 5), (2, 4), (3, 1)))
     tree_feature("hunt_sky_trees", "minecraft:cherry_bees_005", weighted((0, 2), (1, 5), (2, 3)), "minecraft:cherry_sapling")
-    tree_feature("hunt_volcano_trees", "minecraft:trees_badlands", weighted((0, 3), (1, 1)), "minecraft:oak_sapling")
+    tree_feature("hunt_volcano_trees", "minecraft:trees_badlands", weighted((0, 2), (1, 2), (2, 1)), "minecraft:oak_sapling")
     tree_feature("hunt_desert_trees", "minecraft:trees_savanna", weighted((0, 6), (1, 1)), "minecraft:acacia_sapling")
     rock_feature("hunt_forest_rock", "minecraft:forest_rock", 4)
 

@@ -52,7 +52,7 @@ public class HubLabelRenderer extends EntityRenderer<HubLabel, HubLabelRenderer.
 		boolean hasSub = !state.sub.isEmpty();
 		FormattedCharSequence sub = hasSub ? Component.literal(state.sub).getVisualOrderText() : null;
 		int sw = hasSub ? font.width(sub) : 0;
-		float subScale = 0.6f;
+		float subScale = 0.7f;
 		float bw = Math.max(tw, sw * subScale) / 2f + 3;
 		float top = -10f, bottom = hasSub ? 1.5f + 9 * subScale : 0f;
 		collector.submitTextBackground(poseStack, -bw, top - 1, bw, bottom + 1, 0x90000000, Font.DisplayMode.POLYGON_OFFSET, FULL_BRIGHT);

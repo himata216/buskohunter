@@ -35,26 +35,26 @@ public final class HubPopulator {
 	}
 
 	private static final NpcSpot[] NPCS = {
-		new NpcSpot(HubNpc.Role.RECEPTIONIST, 2.5, -16.5, 0f),
-		new NpcSpot(HubNpc.Role.GUILD_MASTER, -2.5, -16.5, 0f),
-		new NpcSpot(HubNpc.Role.COOK, 19.5, 0.5, 90f),
+		new NpcSpot(HubNpc.Role.RECEPTIONIST, 2.5, -16.5, 0.00f),
+		new NpcSpot(HubNpc.Role.GUILD_MASTER, -2.5, -16.5, 0.00f),
+		new NpcSpot(HubNpc.Role.COOK, 18.5, -0.8, 135.00f),
 		new NpcSpot(HubNpc.Role.SMITH, -19.5, -1.5, -90f),
 		new NpcSpot(HubNpc.Role.CLERK, -19.5, 2.5, -90f),
-		new NpcSpot(HubNpc.Role.GATEKEEPER, 2.5, 18.5, 180f),
-		new NpcSpot(HubNpc.Role.INSTRUCTOR, 7.5, 14.5, 90f),
-		new NpcSpot(HubNpc.Role.ROOKIE, -6.5, 7.5, 135f),
+		new NpcSpot(HubNpc.Role.GATEKEEPER, 2.5, 18.5, 270.00f),
+		new NpcSpot(HubNpc.Role.INSTRUCTOR, 7.5, 14.5, 135.00f),
+		new NpcSpot(HubNpc.Role.ROOKIE, -6.5, 7.5, 202.50f),
 		new NpcSpot(HubNpc.Role.BARD, 6.5, -6.5, -45f),
 	};
 
 	private static final LabelSpot[] LABELS = {
-		new LabelSpot("ブスコハンター 集会所", "", 0xFFD860, 0.5, 7.2, 0.5, 2.2f),
-		new LabelSpot("クエストカウンター", "受付嬢に話しかけてクエストを受注", 0xFFE080, 0.5, 3.3, -15.0, 1.5f),
-		new LabelSpot("装備ボックス", "武器・属性・防具を選ぶ", 0xFFB060, -16.5, 2.4, -1.5, 1.2f),
-		new LabelSpot("アイテムボックス", "回復薬や罠を受け取る", 0x90FF90, -16.5, 2.4, 2.5, 1.2f),
-		new LabelSpot("ブスコ食堂", "食事で体力・スタミナ UP", 0xFFA070, 17.5, 3.0, 0.5, 1.5f),
-		new LabelSpot("出発ゲート", "クエストに出発する", 0x80C8FF, 0.5, 4.4, 20.5, 1.6f),
-		new LabelSpot("帰還ゲート", "元の世界へ戻る", 0xE0E0FF, -11.5, 2.6, 16.5, 1.2f),
-		new LabelSpot("訓練場", "人形で技とダメージを確かめる", 0xFF8080, 14.5, 3.0, 9.0, 1.4f),
+		new LabelSpot("ブスコハンター 集会所", "", 0xFFD860, 0.5, 7.2, 0.5, 3.30f),
+		new LabelSpot("クエストカウンター", "受付嬢に話しかけてクエストを受注", 0xFFE080, 0.5, 3.3, -15.0, 2.25f),
+		new LabelSpot("装備ボックス", "武器・属性・防具を選ぶ", 0xFFB060, -16.5, 2.4, -1.5, 1.80f),
+		new LabelSpot("アイテムボックス", "回復薬や罠を受け取る", 0x90FF90, -16.5, 3.4, 2.5, 1.80f),
+		new LabelSpot("ブスコ食堂", "食事で体力・スタミナ UP", 0xFFA070, 17.5, 3.0, 0.5, 2.25f),
+		new LabelSpot("出発ゲート", "クエストに出発する", 0x80C8FF, 0.5, 4.4, 20.5, 2.40f),
+		new LabelSpot("帰還ゲート", "元の世界へ戻る", 0xE0E0FF, -11.5, 2.6, 16.5, 1.80f),
+		new LabelSpot("訓練場", "人形で技とダメージを確かめる", 0xFF8080, 14.5, 3.0, 9.0, 2.10f),
 	};
 
 	public static void tick(MinecraftServer server) {
