@@ -134,6 +134,7 @@ public final class HunterManager {
 		// 武器ゲージ
 		WeaponBehaviors.passiveTick(player, s);
 		WeaponController.tick(player, s);
+		syncVisual(player, s, drawn);
 
 		// 移動速度（抜刀中・技中・行動不能）
 		applySpeed(player, s, drawn, hunting);
@@ -243,6 +244,22 @@ public final class HunterManager {
 	}
 
 	/** 技イベントを自分と周囲のプレイヤーに送る。 */
+	/** ガード・形態・猟虫など、他のプレイヤーから見える状態を送る（変化した時と 2 秒ごと）。 */
+	private static void syncVisual(ServerPlayer player, HunterState s, boolean drawn) {
+		int vis = 0;
+		boolean guardInput = (s.inputBits & com.buskohunter.combat.InputKind.HELD_GUARD) != 0;
+		if (drawn && guardInput && s.move == null && s.weapon.canGuard && !(s.weapon == WeaponType.CHARGE_BLADE && s.cbAxe)) vis |= 1;
+		if (s.cbAxe) vis |= 2;
+		if (s.saSword) vis |= 4;
+		if (s.demonMode) vis |= 8;
+		if (s.kinsectOut) vis |= 16;
+		if (vis != s.visualBits || ++s.visualResend >= 40) {
+			s.visualBits = vis;
+			s.visualResend = 0;
+			broadcastMove(player, new Payloads.MoveEvent(player.getId(), -1, Payloads.MoveEvent.VISUAL, vis, 0));
+		}
+	}
+
 	public static void broadcastMove(ServerPlayer player, Payloads.MoveEvent ev) {
 		Net.send(player, ev);
 		for (ServerPlayer other : Net.tracking(player)) {

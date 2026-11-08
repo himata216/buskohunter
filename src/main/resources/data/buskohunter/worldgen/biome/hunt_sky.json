@@ -1,0 +1,60 @@
+{
+  "attributes": {
+    "minecraft:gameplay/natural_mob_spawns": {
+      "argument": {
+        "spawn_costs": {},
+        "spawns_by_category": {
+          "creature": [
+            {
+              "type": "minecraft:rabbit",
+              "count": 2,
+              "weight": 4
+            },
+            {
+              "type": "minecraft:sheep",
+              "count": 2,
+              "weight": 4
+            }
+          ]
+        }
+      },
+      "modifier": "overlay"
+    },
+    "minecraft:visual/sky_color": "#9ec2ff",
+    "minecraft:audio/background_music": {
+      "default": {
+        "max_delay": 24000,
+        "min_delay": 12000,
+        "sound": "minecraft:music.overworld.cherry_grove"
+      }
+    }
+  },
+  "carvers": [],
+  "downfall": 0.8,
+  "effects": {
+    "water_color": "#3f76e4",
+    "grass_color": "#b6db61",
+    "foliage_color": "#b6db61"
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "buskohunter:hunt_sky_trees",
+      "minecraft:flower_cherry",
+      "minecraft:patch_grass_plain",
+      "minecraft:patch_tall_grass_2",
+      "minecraft:flower_default"
+    ],
+    []
+  ],
+  "has_precipitation": true,
+  "temperature": 0.5
+}

@@ -51,6 +51,14 @@ public class HunterShot extends ThrowableItemProjectile {
 		return s;
 	}
 
+	/** 弾の先を属性色に染める（3D モデルの tintindex 1）。 */
+	public void tint(int color) {
+		ItemStack it = getItem().copy();
+		it.set(net.minecraft.core.component.DataComponents.CUSTOM_MODEL_DATA,
+			new net.minecraft.world.item.component.CustomModelData(java.util.List.of(), java.util.List.of(), java.util.List.of(), java.util.List.of(color)));
+		setItem(it);
+	}
+
 	@Override
 	protected Item getDefaultItem() {
 		return ModItems.projectile("proj_bullet");

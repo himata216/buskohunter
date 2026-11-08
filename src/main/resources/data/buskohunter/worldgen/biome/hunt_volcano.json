@@ -1,0 +1,47 @@
+{
+  "attributes": {
+    "minecraft:gameplay/natural_mob_spawns": {
+      "argument": {
+        "spawn_costs": {},
+        "spawns_by_category": {}
+      },
+      "modifier": "overlay"
+    },
+    "minecraft:visual/sky_color": "#e08a5a",
+    "minecraft:audio/background_music": {
+      "default": {
+        "max_delay": 24000,
+        "min_delay": 12000,
+        "sound": "minecraft:music.overworld.badlands"
+      }
+    },
+    "minecraft:gameplay/snow_golem_melts": true
+  },
+  "carvers": [],
+  "downfall": 0.0,
+  "effects": {
+    "water_color": "#3f76e4",
+    "grass_color": "#90814d",
+    "foliage_color": "#9e814d"
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "buskohunter:hunt_volcano_trees",
+      "minecraft:patch_dry_grass_badlands",
+      "minecraft:patch_dead_bush_badlands",
+      "minecraft:patch_grass_badlands"
+    ],
+    []
+  ],
+  "has_precipitation": false,
+  "temperature": 2.0
+}

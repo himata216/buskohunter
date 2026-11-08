@@ -56,6 +56,11 @@ public final class WorldBuilder {
 		return FieldLayout.surface(level, 60, 60);
 	}
 
+	/** 集会所の地面の高さ（立つ位置の Y）。 */
+	public static int hubFloorY(ServerLevel level) {
+		return hubBase(level);
+	}
+
 	public static Vec3 hubSpawn(ServerLevel level) {
 		return new Vec3(0.5, hubBase(level), 10.5);
 	}
@@ -245,23 +250,41 @@ public final class WorldBuilder {
 
 	private static void decorate(ServerLevel level, FieldType field, FieldLayout layout) {
 		Random rng = new Random(layout.slot * 31L + field.ordinal());
+		if (field != FieldType.CYBER) {
+			// 戦う場所（各エリアの中心）は木や草を払って開けた広場にする
+			for (int i = 0; i < FieldLayout.AREAS; i++) {
+				clearArena(level, layout.areaX[i], layout.areaY[i], layout.areaZ[i], i == layout.nestArea ? 12 : 9);
+			}
+		}
 		switch (field) {
 			case DESERT -> {
-				// オアシス（巣とエリア4）
+				// 緑地（巣とエリア4、ほかに点在）。水場は作らない
 				for (int a : new int[]{layout.nestArea, 3}) {
-					oasis(level, layout.areaX[a], layout.areaY[a], layout.areaZ[a], rng);
+					grove(level, layout.areaX[a] + 13, layout.areaY[a], layout.areaZ[a] - 9, rng);
 				}
+				for (int i = 0; i < 6; i++) {
+					double ang = rng.nextDouble() * Math.PI * 2, r = 30 + rng.nextDouble() * 110;
+					int gx = layout.campX + (int) (Math.cos(ang) * r), gz = layout.campZ + (int) (Math.sin(ang) * r);
+					if (!nearArea(layout, gx, gz, 14)) grove(level, gx, FieldLayout.surface(level, gx, gz), gz, rng);
+				}
+				patches(level, layout, rng, new Block[]{Blocks.SANDSTONE, Blocks.SMOOTH_SANDSTONE, Blocks.COARSE_DIRT}, 40);
 			}
 			case VOLCANO -> {
+				patches(level, layout, rng, new Block[]{Blocks.BLACKSTONE, Blocks.DYED_TERRACOTTA.red(), Blocks.GRAVEL, Blocks.BASALT, Blocks.PODZOL}, 70);
 				for (int a : new int[]{1, 4, layout.nestArea}) {
-					lavaPool(level, layout.areaX[a] + 8, layout.areaY[a], layout.areaZ[a] + 6, rng);
+					lavaPool(level, layout.areaX[a] + 14, layout.areaY[a], layout.areaZ[a] + 10, rng);
+				}
+				for (int i = 0; i < 24; i++) {
+					double ang = rng.nextDouble() * Math.PI * 2, r = 12 + rng.nextDouble() * 150;
+					int px = layout.campX + (int) (Math.cos(ang) * r), pz = layout.campZ + (int) (Math.sin(ang) * r);
+					if (!nearArea(layout, px, pz, 11)) rock(level, px, FieldLayout.surface(level, px, pz), pz, rng, Blocks.BASALT, Blocks.BLACKSTONE);
 				}
 			}
 			case FOREST -> {
 				// 酒蔵（巣）
 				int x = layout.areaX[layout.nestArea], y = layout.areaY[layout.nestArea], z = layout.areaZ[layout.nestArea];
 				for (int i = 0; i < 10; i++) {
-					set(level, x + 10 + (i % 5), y, z - 4 + (i / 5) * 2, Blocks.BARREL);
+					set(level, x + 9 + (i % 5), y, z - 4 + (i / 5) * 2, Blocks.BARREL);
 				}
 			}
 			case SKY -> {
@@ -280,22 +303,73 @@ public final class WorldBuilder {
 		}
 	}
 
-	private static void oasis(ServerLevel level, int x, int y, int z, Random rng) {
-		for (int dx = -8; dx <= 8; dx++) {
-			for (int dz = -8; dz <= 8; dz++) {
+	/** エリアの中心を開けた広場にする（地面より上を空気に）。 */
+	private static void clearArena(ServerLevel level, int x, int y, int z, int r) {
+		for (int dx = -r; dx <= r; dx++) {
+			for (int dz = -r; dz <= r; dz++) {
+				if (dx * dx + dz * dz > r * r) continue;
+				for (int dy = 0; dy <= 14; dy++) {
+					BlockPos p = new BlockPos(x + dx, y + dy, z + dz);
+					if (!level.getBlockState(p).isAir()) level.setBlock(p, Blocks.AIR.defaultBlockState(), FLAGS);
+				}
+			}
+		}
+	}
+
+	/** 砂原の緑地：草地と木、花（水は無し）。 */
+	private static void grove(ServerLevel level, int x, int y, int z, Random rng) {
+		Block[] plants = {Blocks.SHORT_GRASS, Blocks.SHORT_GRASS, Blocks.FERN, Blocks.DANDELION, Blocks.POPPY, Blocks.AZURE_BLUET};
+		for (int dx = -9; dx <= 9; dx++) {
+			for (int dz = -9; dz <= 9; dz++) {
 				double r = Math.sqrt(dx * dx + dz * dz);
-				if (r <= 6) {
-					set(level, x + dx, y - 1, z + dz, Blocks.WATER);
-					set(level, x + dx, y - 2, z + dz, Blocks.SAND);
-					fill(level, x + dx, y, z + dz, x + dx, y + 3, z + dz, Blocks.AIR);
-				} else if (r <= 8) {
-					set(level, x + dx, y - 1, z + dz, Blocks.GRASS_BLOCK);
+				if (r > 8.5 - rng.nextDouble() * 1.8) continue;
+				set(level, x + dx, y - 1, z + dz, Blocks.GRASS_BLOCK);
+				if (level.getBlockState(new BlockPos(x + dx, y, z + dz)).isAir() && rng.nextInt(3) == 0) {
+					set(level, x + dx, y, z + dz, plants[rng.nextInt(plants.length)]);
 				}
 			}
 		}
 		for (int i = 0; i < 4; i++) {
 			double a = rng.nextDouble() * Math.PI * 2;
-			tree(level, x + (int) (Math.cos(a) * 7.5), y, z + (int) (Math.sin(a) * 7.5), Blocks.JUNGLE_LOG, Blocks.JUNGLE_LEAVES, rng);
+			double r = 2.5 + rng.nextDouble() * 4.5;
+			boolean jungle = rng.nextBoolean();
+			tree(level, x + (int) (Math.cos(a) * r), y, z + (int) (Math.sin(a) * r), jungle ? Blocks.JUNGLE_LOG : Blocks.ACACIA_LOG,
+				jungle ? Blocks.JUNGLE_LEAVES : Blocks.ACACIA_LEAVES, rng);
+		}
+	}
+
+	/** 地面の色むら（いくつかの石・土をまだらに置く）。 */
+	private static void patches(ServerLevel level, FieldLayout layout, Random rng, Block[] blocks, int count) {
+		for (int i = 0; i < count; i++) {
+			double ang = rng.nextDouble() * Math.PI * 2, rr = rng.nextDouble() * 170;
+			int px = layout.campX + (int) (Math.cos(ang) * rr), pz = layout.campZ + (int) (Math.sin(ang) * rr);
+			if (Math.abs(px - layout.campX) < 8 && Math.abs(pz - layout.campZ) < 8) continue;
+			int y = FieldLayout.surface(level, px, pz) - 1;
+			Block b = blocks[rng.nextInt(blocks.length)];
+			int r = 2 + rng.nextInt(5);
+			for (int dx = -r; dx <= r; dx++) {
+				for (int dz = -r; dz <= r; dz++) {
+					if (dx * dx + dz * dz > r * r - rng.nextInt(r + 1)) continue;
+					BlockPos p = new BlockPos(px + dx, y, pz + dz);
+					BlockState cur = level.getBlockState(p);
+					if (cur.isAir() || !cur.getFluidState().isEmpty()) continue;
+					if (!level.getBlockState(p.above()).isAir() && !level.getBlockState(p.above()).canBeReplaced()) continue;
+					level.setBlock(p, b.defaultBlockState(), FLAGS);
+				}
+			}
+		}
+	}
+
+	/** 岩（小さな塊）。 */
+	private static void rock(ServerLevel level, int x, int y, int z, Random rng, Block a, Block b) {
+		int r = 1 + rng.nextInt(2);
+		for (int dx = -r; dx <= r; dx++) {
+			for (int dz = -r; dz <= r; dz++) {
+				int h = r + 1 - Math.max(Math.abs(dx), Math.abs(dz)) + rng.nextInt(2);
+				for (int dy = 0; dy < h; dy++) {
+					set(level, x + dx, y + dy, z + dz, rng.nextInt(3) == 0 ? b : a);
+				}
+			}
 		}
 	}
 

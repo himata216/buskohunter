@@ -42,7 +42,9 @@ public final class ModItems {
 
 	public static final String[] PROJECTILES = {
 		"proj_bullet", "proj_arrow", "proj_sake_bottle", "proj_fireball", "proj_water_orb", "proj_missile",
-		"proj_holy_orb", "proj_glitch_cube", "proj_kinsect", "proj_shell", "proj_sombrero"
+		"proj_holy_orb", "proj_glitch_cube", "proj_kinsect", "proj_shell", "proj_sombrero",
+		// 左腕の飾り（盾・双剣の左・猟虫）。描画専用
+		"disp_shield_small", "disp_shield_large", "disp_shield_cb", "disp_kinsect", "disp_dual_left"
 	};
 
 	public static final ResourceKey<CreativeModeTab> TAB_KEY =

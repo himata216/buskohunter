@@ -19,5 +19,6 @@ public abstract class AvatarRendererMixin<AvatarlikeEntity extends Avatar & Clie
 	private void buskohunter$extractPose(AvatarlikeEntity entity, AvatarRenderState state, float partialTicks, CallbackInfo ci) {
 		Pose pose = PlayerAnimator.compute(entity, entity.tickCount + partialTicks, state.isCrouching);
 		PoseKeys.set(state, pose);
+		com.buskohunter.client.render.LeftArmLayer.extract(entity, state);
 	}
 }

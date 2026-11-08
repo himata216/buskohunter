@@ -65,6 +65,9 @@ public final class HunterState {
 	/** 操虫棍：エキス（残り tick）。 */
 	public int extractRed, extractWhite, extractOrange;
 	public boolean kinsectOut;
+	/** 他のプレイヤーへ送った見た目の状態（Payloads.MoveEvent.VISUAL）。 */
+	public int visualBits = -1;
+	public int visualResend;
 	/** ボウガン：装填数と弾種。 */
 	public int ammo = 9;
 	public int ammoType;
@@ -154,7 +157,7 @@ public final class HunterState {
 		return move != null;
 	}
 
-	/** 現在ガード中か（ガード可能武器でしゃがみ、または技のガード frame 中）。 */
+	/** 現在ガード中か（ガード可能武器で右クリック長押し、または技のガード frame 中）。 */
 	public boolean guarding() {
 		if (move != null) {
 			return move.guardFrom >= 0 && moveTick >= move.guardFrom && moveTick <= move.guardTo;

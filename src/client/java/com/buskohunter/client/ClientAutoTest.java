@@ -173,7 +173,128 @@ public final class ClientAutoTest {
 		if (t == 3200) {
 			log("RESULT DONE screen=" + (mc.gui.screen() == null ? "none" : mc.gui.screen().getClass().getSimpleName()));
 		}
-		if (t == 3300) {
+		if (t >= 3300) tour(mc, t - 3300);
+	}
+
+	// =====================================================================
+	// 見た目の確認（集会所の NPC・看板、武器の持ち方、フィールドの地形）を撮影する
+	// =====================================================================
+	private static final int HUB_VIEWS = 4;
+	private static final int VIEW_TICKS = 90;
+	private static final int WEAPON_TICKS = 50;
+	private static final int FIELD_TICKS = 260;
+	private static final com.buskohunter.core.FieldType[] TOUR_FIELDS = {
+		com.buskohunter.core.FieldType.FOREST, com.buskohunter.core.FieldType.DESERT,
+		com.buskohunter.core.FieldType.VOLCANO, com.buskohunter.core.FieldType.SKY};
+	private static net.minecraft.world.entity.Entity camEntity;
+
+	private static void shot(Minecraft mc, String name) {
+		net.minecraft.client.Screenshot.grab(mc.gameDirectory, "bh_" + name + ".png", mc.gameRenderer.mainRenderTarget(), 1,
+			msg -> log("screenshot " + name));
+	}
+
+	private static void tour(Minecraft mc, int k) {
+		if (k == 0) {
+			mc.gui.setScreen(null);
+			if (!mc.gui.hud.isHidden()) mc.gui.hud.toggle();
+			mc.options.setCameraType(net.minecraft.client.CameraType.FIRST_PERSON);
+			onServer(p -> p.setGameMode(net.minecraft.world.level.GameType.CREATIVE));
+			log("tour start");
+		}
+		// 集会所の 4 方向
+		double[][] views = {{0.5, -7.5, 180}, {-9.5, 0.5, 90}, {9.5, 0.5, -90}, {0.5, 9.5, 0}};
+		if (k < HUB_VIEWS * VIEW_TICKS) {
+			int v = k / VIEW_TICKS, r = k % VIEW_TICKS;
+			if (r == 1) {
+				double[] vw = views[v];
+				onServer(p -> {
+					ServerLevel hub = p.level().getServer().getLevel(com.buskohunter.quest.Dims.HUB);
+					if (hub == null) return;
+					int y = com.buskohunter.quest.WorldBuilder.hubFloorY(hub);
+					p.teleportTo(hub, vw[0], y, vw[1], java.util.Set.of(), (float) vw[2], 8f, true);
+				});
+			}
+			if (r == VIEW_TICKS - 5) shot(mc, "hub_" + v);
+			return;
+		}
+		k -= HUB_VIEWS * VIEW_TICKS;
+		// 武器の持ち方（右前・左前から）
+		WeaponType[] ws = WeaponType.values();
+		if (k < ws.length * WEAPON_TICKS) {
+			int i = k / WEAPON_TICKS, r = k % WEAPON_TICKS;
+			WeaponType w = ws[i];
+			if (r == 0) {
+				ElementType e = ElementType.SERIES[i % ElementType.SERIES.length];
+				onServer(p -> {
+					ServerLevel hub = p.level().getServer().getLevel(com.buskohunter.quest.Dims.HUB);
+					if (hub == null) return;
+					int y = com.buskohunter.quest.WorldBuilder.hubFloorY(hub);
+					if (p.level() != hub || p.distanceToSqr(0.5, y, 6.5) > 1) p.teleportTo(hub, 0.5, y, 6.5, java.util.Set.of(), 180f, 0f, true);
+					p.setItemSlot(net.minecraft.world.entity.EquipmentSlot.MAINHAND, com.buskohunter.registry.ModItems.WEAPONS.get(w).create(e));
+				});
+			}
+			if (r == 4 || r == 27) {
+				var pl = mc.player;
+				if (pl != null) {
+					if (camEntity == null) camEntity = new com.buskohunter.entity.HubLabel(com.buskohunter.registry.ModEntities.HUB_LABEL, mc.level);
+					double side = r == 4 ? 1 : -1;
+					// プレイヤーは北（-Z）向き。右は +X
+					double cx = pl.getX() + side * 2.3, cz = pl.getZ() - 1.9, cy = pl.getY() + 1.35 - camEntity.getEyeHeight();
+					double tx = pl.getX(), ty = pl.getY() + 1.0, tz = pl.getZ();
+					double dx = tx - cx, dz = tz - cz, dy = ty - (cy + camEntity.getEyeHeight());
+					float yaw = (float) (Math.toDegrees(Math.atan2(dz, dx)) - 90.0);
+					float pitch = (float) -Math.toDegrees(Math.atan2(dy, Math.sqrt(dx * dx + dz * dz)));
+					camEntity.snapTo(cx, cy, cz, yaw, pitch);
+					mc.setCameraEntity(camEntity);
+				}
+			}
+			if (r == 22) shot(mc, "weapon_" + w.id + "_r");
+			if (r == 45) {
+				shot(mc, "weapon_" + w.id + "_l");
+			}
+			if (r == WEAPON_TICKS - 1 && i == ws.length - 1) mc.setCameraEntity(mc.player);
+			return;
+		}
+		k -= ws.length * WEAPON_TICKS;
+		// フィールドの地形
+		if (k < TOUR_FIELDS.length * FIELD_TICKS) {
+			int i = k / FIELD_TICKS, r = k % FIELD_TICKS;
+			com.buskohunter.core.FieldType f = TOUR_FIELDS[i];
+			if (r == 0) {
+				mc.setCameraEntity(mc.player);
+				onServer(p -> {
+					ServerLevel lvl = p.level().getServer().getLevel(com.buskohunter.quest.Dims.field(f));
+					if (lvl == null) {
+						log("no field level " + f);
+						return;
+					}
+					com.buskohunter.quest.FieldLayout l = com.buskohunter.quest.FieldLayout.create(lvl, f, 6);
+					com.buskohunter.quest.WorldBuilder.prepareField(lvl, f, l);
+					int a = 2;
+					double cx = l.areaX[a] + 0.5, cz = l.areaZ[a] + 0.5;
+					double px = cx + 16, pz = cz + 12, py = l.areaY[a] + 9;
+					float yaw = (float) (Math.toDegrees(Math.atan2(cz - pz, cx - px)) - 90.0);
+					p.teleportTo(lvl, px, py, pz, java.util.Set.of(), yaw, 22f, true);
+					p.getAbilities().flying = true;
+					p.onUpdateAbilities();
+					int water = 0;
+					for (int dx = -40; dx <= 40; dx += 2) {
+						for (int dz = -40; dz <= 40; dz += 2) {
+							int hy = lvl.getHeight(Heightmap.Types.MOTION_BLOCKING, (int) cx + dx, (int) cz + dz);
+							if (!lvl.getBlockState(new net.minecraft.core.BlockPos((int) cx + dx, hy - 1, (int) cz + dz)).getFluidState().isEmpty()) water++;
+						}
+					}
+					log("field " + f + " camp y=" + l.campY + " area y=" + l.areaY[a] + " fluid=" + water);
+				});
+			}
+			if (r == FIELD_TICKS - 10) shot(mc, "field_" + f.name().toLowerCase());
+			return;
+		}
+		k -= TOUR_FIELDS.length * FIELD_TICKS;
+		if (k == 20) {
+			log("RESULT TOUR DONE");
+		}
+		if (k == 40) {
 			log("quit");
 			mc.stop();
 		}

@@ -1,0 +1,67 @@
+{
+  "attributes": {
+    "minecraft:gameplay/natural_mob_spawns": {
+      "argument": {
+        "spawn_costs": {},
+        "spawns_by_category": {
+          "creature": [
+            {
+              "type": "minecraft:sheep",
+              "count": 3,
+              "weight": 12
+            },
+            {
+              "type": "minecraft:cow",
+              "count": 3,
+              "weight": 8
+            },
+            {
+              "type": "minecraft:chicken",
+              "count": 3,
+              "weight": 6
+            }
+          ]
+        }
+      },
+      "modifier": "overlay"
+    },
+    "minecraft:visual/sky_color": "#79a6ff",
+    "minecraft:audio/background_music": {
+      "default": {
+        "max_delay": 24000,
+        "min_delay": 12000,
+        "sound": "minecraft:music.overworld.forest"
+      }
+    }
+  },
+  "carvers": [],
+  "downfall": 0.8,
+  "effects": {
+    "water_color": "#3f76e4"
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "buskohunter:hunt_forest_trees",
+      "buskohunter:hunt_forest_rock",
+      "minecraft:forest_flowers",
+      "minecraft:flower_default",
+      "minecraft:patch_bush",
+      "minecraft:patch_grass_forest",
+      "minecraft:patch_tall_grass_2",
+      "minecraft:patch_leaf_litter",
+      "minecraft:patch_pumpkin"
+    ],
+    []
+  ],
+  "has_precipitation": true,
+  "temperature": 0.7
+}

@@ -284,7 +284,7 @@ public final class WeaponBehaviors {
 		}
 		if (m == GL_SHELL || m == GL_BURST) {
 			if (s.shells <= 0) {
-				msg(player, "弾切れ！ しゃがみ+R でリロード");
+				msg(player, "弾切れ！ 右を押したまま R でリロード");
 				click(player);
 				return false;
 			}
@@ -597,7 +597,7 @@ public final class WeaponBehaviors {
 		Fx.playerSound((ServerLevel) player.level(), player.position(), "ui.error", 0.6f, 1f);
 	}
 
-	/** ボウガンの弾種切替（しゃがみ+右）。 */
+	/** ボウガンの弾種切替（右クリックを押したまま R）。 */
 	public static void switchAmmo(ServerPlayer player, HunterState s) {
 		s.ammoType = (s.ammoType + 1) % ShotKind.BOWGUN_AMMO.length;
 		s.ammo = 0;

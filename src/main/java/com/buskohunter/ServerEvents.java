@@ -9,7 +9,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -32,6 +35,13 @@ public final class ServerEvents {
 			HunterManager.tick(server);
 			QuestManager.INSTANCE.tick(server);
 			if (server.getTickCount() % 100 == 0) purgeVanillaMonsters(server);
+			if (server.getTickCount() % 40 == 0) com.buskohunter.quest.HubPopulator.tick(server);
+		});
+
+		// 集会所・フィールドにバニラのモブ（スライムなど）を入れない。集会所は動物も入れない
+		net.minecraftforge.event.entity.EntityJoinLevelEvent.BUS.addListener(e -> {
+			Level level = e.getLevel();
+			return !level.isClientSide() && Dims.isOurs(level) && unwanted(level, e.getEntity());
 		});
 
 		// 体力 0 → クエスト中は「力尽きた」扱い（キャンプへ戻る）。true を返すと死亡がキャンセルされる
@@ -74,9 +84,17 @@ public final class ServerEvents {
 			if (!Dims.isOurs(level)) continue;
 			List<Entity> remove = new ArrayList<>();
 			for (Entity e : level.getAllEntities()) {
-				if (e instanceof Monster) remove.add(e);
+				if (unwanted(level, e)) remove.add(e);
 			}
 			for (Entity e : remove) e.discard();
 		}
+	}
+
+	/** このモッドのものではないモブで、集会所なら全部、フィールドなら敵（スライム・ゾンビなど）。 */
+	private static boolean unwanted(Level level, Entity e) {
+		if (!(e instanceof Mob)) return false;
+		if (BuskoHunter.MOD_ID.equals(BuiltInRegistries.ENTITY_TYPE.getKey(e.getType()).getNamespace())) return false;
+		if (e.hasCustomName() || (e instanceof Mob m && m.isPersistenceRequired() && !(e instanceof Enemy))) return false;
+		return Dims.isHub(level) || e instanceof Enemy;
 	}
 }

@@ -74,12 +74,12 @@ public final class WeaponGauges {
 					int c = i < s.noteCount ? colors[Math.max(0, Math.min(3, s.notes[i]))] : 0xFF303030;
 					g.fill(x + i * 12, y, x + i * 12 + 9, y + 8, c);
 				}
-				Gfx.text(g, "♪ 演奏: しゃがみ+左", x + 40, y - 1, Gfx.GREY);
+				Gfx.text(g, "♪ 演奏: 右を押したまま左", x + 40, y - 1, Gfx.GREY);
 			}
 			case HAMMER -> Gfx.text(g, s.holding ? "溜めLv " + s.chargeLevel : "右長押しで溜め", x, y - 1,
 				s.holding ? 0xFFFFD040 : Gfx.GREY);
-			case LANCE -> Gfx.text(g, "しゃがみでガード / R で突進", x, y - 1, Gfx.GREY);
-			case SWORD_AND_SHIELD -> Gfx.text(g, "しゃがみでガード / R で盾攻撃", x, y - 1, Gfx.GREY);
+			case LANCE -> Gfx.text(g, "右長押しでガード / R で突進", x, y - 1, Gfx.GREY);
+			case SWORD_AND_SHIELD -> Gfx.text(g, "右長押しでガード / R で盾攻撃", x, y - 1, Gfx.GREY);
 		}
 	}
 }

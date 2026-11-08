@@ -74,7 +74,7 @@ public final class WeaponController {
 
 	private static boolean tryInput(ServerPlayer player, HunterState s, InputKind in) {
 		if (!canAct(player, s)) return false;
-		if (in == InputKind.GUARD_B && (s.weapon == WeaponType.LIGHT_BOWGUN || s.weapon == WeaponType.HEAVY_BOWGUN)) {
+		if ((in == InputKind.GUARD_B || in == InputKind.GUARD_S) && (s.weapon == WeaponType.LIGHT_BOWGUN || s.weapon == WeaponType.HEAVY_BOWGUN)) {
 			if (s.move == null || s.moveTick >= s.move.cancelFrom) {
 				WeaponBehaviors.switchAmmo(player, s);
 				return true;
@@ -371,6 +371,7 @@ public final class WeaponController {
 		for (int i = 0; i < count; i++) {
 			for (int p = 0; p < pellets; p++) {
 				HunterShot shot = HunterShot.create(level, player, actual, mv, extraMul * actual.damageMul);
+				shot.tint(s.element.color);
 				Vec3 eye = player.getEyePosition();
 				shot.setPos(eye.x, eye.y - 0.1, eye.z);
 				float spread = actual.spread + (count > 1 ? 4f * (i - (count - 1) / 2f) : 0);

@@ -189,5 +189,12 @@
   "subtitles.buskohunter.quest.start": "Quest starts",
   "subtitles.buskohunter.quest.area": "Area changed",
   "subtitles.buskohunter.quest.alert": "Monster spotted",
-  "subtitles.buskohunter.quest.timer": "Time running out"
+  "subtitles.buskohunter.quest.timer": "Time running out",
+  "entity.buskohunter.hub_npc": "Hub NPC",
+  "entity.buskohunter.hub_label": "Sign",
+  "item.buskohunter.disp_shield_small": "Display: small shield",
+  "item.buskohunter.disp_shield_large": "Display: large shield",
+  "item.buskohunter.disp_shield_cb": "Display: charge blade shield",
+  "item.buskohunter.disp_kinsect": "Display: kinsect",
+  "item.buskohunter.disp_dual_left": "Display: left dual blade"
 }

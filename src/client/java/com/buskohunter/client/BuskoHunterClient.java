@@ -6,6 +6,8 @@ import com.buskohunter.client.hud.DamageNumbers;
 import com.buskohunter.client.hud.HunterHud;
 import com.buskohunter.client.input.HunterInput;
 import com.buskohunter.client.render.DummyRenderer;
+import com.buskohunter.client.render.LeftArmLayer;
+import com.buskohunter.client.render.OrientedProjectileRenderer;
 import com.buskohunter.client.render.MonsterRenderer;
 import com.buskohunter.client.render.model.BuskoMeshes;
 import com.buskohunter.client.screen.QuestResultScreen;
@@ -35,6 +37,14 @@ public final class BuskoHunterClient {
 			e.registerLayerDefinition(MonsterRenderer.SAKERAN_LAYER, BuskoMeshes::createSakeranLayer);
 		});
 		EntityRenderersEvent.RegisterRenderers.BUS.addListener(BuskoHunterClient::registerRenderers);
+		EntityRenderersEvent.AddLayers.BUS.addListener(BuskoHunterClient::addLayers);
+		// 技・抜刀中の移動速度の変化で視野角が変わる（カメラが寄る）のをなくす
+		net.minecraftforge.client.event.ComputeFovModifierEvent.BUS.addListener(e -> {
+			var p = e.getPlayer();
+			if (p.getMainHandItem().getItem() instanceof com.buskohunter.item.HunterWeaponItem || Dims.isOurs(p.level())) {
+				e.setNewFovModifier(1.0f);
+			}
+		});
 		HunterInput.register();
 		HunterHud.register();
 
@@ -54,14 +64,24 @@ public final class BuskoHunterClient {
 		});
 	}
 
+	private static void addLayers(EntityRenderersEvent.AddLayers e) {
+		LeftArmLayer.resolver = e.getContext().getItemModelResolver();
+		for (net.minecraft.world.entity.player.PlayerModelType type : e.getModelTypes()) {
+			net.minecraft.client.renderer.entity.player.AvatarRenderer<net.minecraft.client.player.AbstractClientPlayer> r = e.getPlayerRenderer(type);
+			if (r != null) r.addLayer(new LeftArmLayer(r));
+		}
+	}
+
 	private static void registerRenderers(EntityRenderersEvent.RegisterRenderers e) {
 		for (MonsterKind kind : MonsterKind.values()) {
 			e.registerEntityRenderer(ModEntities.MONSTERS.get(kind), ctx -> new MonsterRenderer(ctx, kind));
 		}
 		e.registerEntityRenderer(ModEntities.TRAINING_DUMMY, DummyRenderer::new);
-		e.registerEntityRenderer(ModEntities.MONSTER_PROJECTILE, ctx -> new ThrownItemRenderer<>(ctx, 2.4f, true));
-		e.registerEntityRenderer(ModEntities.HUNTER_SHOT, ctx -> new ThrownItemRenderer<>(ctx, 0.8f, true));
-		e.registerEntityRenderer(ModEntities.KINSECT, ctx -> new ThrownItemRenderer<>(ctx, 1.2f, true));
+		e.registerEntityRenderer(ModEntities.HUB_NPC, com.buskohunter.client.render.HubNpcRenderer::new);
+		e.registerEntityRenderer(ModEntities.HUB_LABEL, com.buskohunter.client.render.HubLabelRenderer::new);
+		e.registerEntityRenderer(ModEntities.MONSTER_PROJECTILE, ctx -> new OrientedProjectileRenderer<>(ctx, 2.2f, true));
+		e.registerEntityRenderer(ModEntities.HUNTER_SHOT, ctx -> new OrientedProjectileRenderer<>(ctx, 0.75f, true));
+		e.registerEntityRenderer(ModEntities.KINSECT, ctx -> new OrientedProjectileRenderer<>(ctx, 1.1f, false));
 		e.registerEntityRenderer(ModEntities.HUNT_TRAP, ctx -> new ThrownItemRenderer<>(ctx, 1.6f, false));
 		e.registerEntityRenderer(ModEntities.BARREL_BOMB, ctx -> new ThrownItemRenderer<>(ctx, 2.0f, false));
 	}

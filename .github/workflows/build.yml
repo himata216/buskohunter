@@ -81,7 +81,7 @@ jobs:
           xvfb-run -a -s "-screen 0 854x480x24" bash -c '
             (i=0; while true; do sleep 3; i=$((i+1)); import -window root -quality 70 shots/shot_$(printf %03d $i).jpg 2>/dev/null; done) &
             SHOTS=$!
-            BH_AUTOTEST=true timeout 1500 ./gradlew runClient --no-daemon > client.log 2>&1
+            BH_AUTOTEST=true timeout 2100 ./gradlew runClient --no-daemon > client.log 2>&1
             echo "client exit $?"
             kill $SHOTS
           '
@@ -99,6 +99,8 @@ jobs:
           cp server.log ci-out/ 2>/dev/null || true
           cp client.log ci-out/ 2>/dev/null || true
           mkdir -p ci-out/shots && cp shots/*.jpg ci-out/shots/ 2>/dev/null || true
+          mkdir -p ci-out/exact
+          for f in run/screenshots/bh_*.png; do [ -f "$f" ] && convert "$f" -quality 85 "ci-out/exact/$(basename "${f%.png}").jpg"; done || true
           grep -n -E "AUTOTEST|ERROR|Exception|Caused by|buskohunter" client.log 2>/dev/null | head -n 800 > ci-out/client_summary.txt || true
           grep -n -E "SELFTEST|ERROR|Exception|Caused by|WARN.*buskohunter" server.log 2>/dev/null | head -n 600 > ci-out/server_summary.txt || true
           grep -n -E "error:|warning: \[|FAILURE|BUILD (SUCCESSFUL|FAILED)|What went wrong|Exception" build.log | head -n 400 > ci-out/summary.txt || true

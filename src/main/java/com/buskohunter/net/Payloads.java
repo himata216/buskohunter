@@ -238,6 +238,8 @@ public final class Payloads {
 		public static final int HOLD = 1;
 		public static final int RELEASE = 2;
 		public static final int STOP = 3;
+		/** 見た目の状態（charge にビット: 1=ガード, 2=チャアク斧, 4=スラアク剣, 8=鬼人化, 16=猟虫を飛ばしている）。 */
+		public static final int VISUAL = 4;
 
 		@Override
 		public Type<? extends CustomPacketPayload> type() {

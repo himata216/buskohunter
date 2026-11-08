@@ -189,5 +189,12 @@
   "subtitles.buskohunter.quest.start": "クエスト開始",
   "subtitles.buskohunter.quest.area": "エリア移動",
   "subtitles.buskohunter.quest.alert": "モンスター発見",
-  "subtitles.buskohunter.quest.timer": "残り時間わずか"
+  "subtitles.buskohunter.quest.timer": "残り時間わずか",
+  "entity.buskohunter.hub_npc": "集会所の人",
+  "entity.buskohunter.hub_label": "看板",
+  "item.buskohunter.disp_shield_small": "（表示）小盾",
+  "item.buskohunter.disp_shield_large": "（表示）大盾",
+  "item.buskohunter.disp_shield_cb": "（表示）チャージアックスの盾",
+  "item.buskohunter.disp_kinsect": "（表示）猟虫",
+  "item.buskohunter.disp_dual_left": "（表示）双剣の左"
 }

@@ -29,6 +29,7 @@ public final class PlayerAnimator {
 		int dir;
 		int charge;
 		int endedAge = -1000;
+		int visual;
 		final Pose pose = new Pose();
 	}
 
@@ -69,9 +70,27 @@ public final class PlayerAnimator {
 				tr.move = null;
 				tr.endedAge = e.tickCount;
 			}
+			case Payloads.MoveEvent.VISUAL -> tr.visual = ev.charge();
 			default -> {
 			}
 		}
+	}
+
+	/** 見た目の状態ビット（Payloads.MoveEvent.VISUAL）。自分はサーバーの同期とその場の入力から作る。 */
+	public static int visualOf(Entity entity) {
+		Minecraft mc = Minecraft.getInstance();
+		if (entity == mc.player) {
+			var hs = ClientHunter.STATE;
+			int v = 0;
+			if (com.buskohunter.client.input.HunterInput.guardHeld()) v |= 1;
+			if (hs.cbAxe) v |= 2;
+			if (hs.saSword) v |= 4;
+			if (hs.demonMode) v |= 8;
+			if (hs.kinsectOut) v |= 16;
+			return v;
+		}
+		Track tr = TRACKS.get(entity.getId());
+		return tr == null ? 0 : tr.visual;
 	}
 
 	/** 現在の技（HUD やカメラ演出用）。 */
@@ -89,7 +108,6 @@ public final class PlayerAnimator {
 		Track tr = TRACKS.computeIfAbsent(entity.getId(), id -> new Track());
 		Pose p = tr.pose.reset();
 		WeaponType weapon = weaponOf(entity.getMainHandItem());
-		boolean local = entity == Minecraft.getInstance().player;
 
 		if (tr.move != null) {
 			float elapsed = ageInTicks - tr.startAge;
@@ -115,18 +133,14 @@ public final class PlayerAnimator {
 
 		// 技を出していない：抜刀中の構え
 		if (weapon != null) {
-			boolean alt = false;
-			boolean guard = crouching && weapon.canGuard;
-			if (local) {
-				var hs = ClientHunter.STATE;
-				alt = switch (weapon) {
-					case DUAL_BLADES -> hs.demonMode;
-					case CHARGE_BLADE -> hs.cbAxe;
-					case SWITCH_AXE -> hs.saSword;
-					default -> false;
-				};
-				if (weapon == WeaponType.CHARGE_BLADE) guard = crouching && !hs.cbAxe;
-			}
+			int vis = visualOf(entity);
+			boolean guard = (vis & 1) != 0 && weapon.canGuard && !(weapon == WeaponType.CHARGE_BLADE && (vis & 2) != 0);
+			boolean alt = switch (weapon) {
+				case DUAL_BLADES -> (vis & 8) != 0;
+				case CHARGE_BLADE -> (vis & 2) != 0;
+				case SWITCH_AXE -> (vis & 4) != 0;
+				default -> false;
+			};
 			AnimLibrary.stance(weapon, guard, alt, ageInTicks, p);
 			float since = ageInTicks - tr.endedAge;
 			p.weight = Math.max(0f, Math.min(1f, since / 4f));

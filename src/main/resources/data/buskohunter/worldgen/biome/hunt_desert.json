@@ -1,0 +1,53 @@
+{
+  "attributes": {
+    "minecraft:gameplay/natural_mob_spawns": {
+      "argument": {
+        "spawn_costs": {},
+        "spawns_by_category": {
+          "creature": [
+            {
+              "type": "minecraft:rabbit",
+              "count": 2,
+              "weight": 4
+            }
+          ]
+        }
+      },
+      "modifier": "overlay"
+    },
+    "minecraft:visual/sky_color": "#6eb1ff",
+    "minecraft:audio/background_music": {
+      "default": {
+        "max_delay": 24000,
+        "min_delay": 12000,
+        "sound": "minecraft:music.overworld.desert"
+      }
+    },
+    "minecraft:gameplay/snow_golem_melts": true
+  },
+  "carvers": [],
+  "downfall": 0.0,
+  "effects": {
+    "water_color": "#3f76e4"
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "buskohunter:hunt_desert_trees",
+      "minecraft:patch_dry_grass_desert",
+      "minecraft:patch_dead_bush_2",
+      "minecraft:patch_cactus_desert"
+    ],
+    []
+  ],
+  "has_precipitation": false,
+  "temperature": 2.0
+}

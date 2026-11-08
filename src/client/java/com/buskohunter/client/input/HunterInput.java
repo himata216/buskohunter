@@ -14,7 +14,10 @@ import com.buskohunter.monster.HuntMonster;
 import com.buskohunter.net.Payloads;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.CameraType;
+import net.minecraftforge.client.event.MovementInputUpdateEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraft.world.entity.player.Input;
+import com.buskohunter.core.WeaponType;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -50,11 +53,32 @@ public final class HunterInput {
 	private static boolean autoCamera;
 	private static CameraType savedCamera;
 
+	private static final int JUMP_WINDOW = 5;
+	private static final int GUARD_HOLD = 5;
+	private static boolean prevShift, prevJump;
+	private static int jumpWindow, forceJump;
+	private static int rTicks;
+	private static boolean rUsed;
+	/** 武器を持っている間はバニラのしゃがみ・ジャンプを止める（Shift＝回避、ジャンプ＝ダブルクリックで回避）。 */
+	private static boolean suppressVanillaMove;
+	private static boolean guardHeldNow;
+
+	/** 自分がいまガード入力中か（右クリック長押し）。 */
+	public static boolean guardHeld() {
+		return guardHeldNow;
+	}
+
 	public static void register() {
 		special = new KeyMapping("key.buskohunter.special", InputConstants.Type.KEYBOARD, InputConstants.KEY_R, CATEGORY);
-		dodge = new KeyMapping("key.buskohunter.dodge", InputConstants.Type.KEYBOARD, InputConstants.KEY_LALT, CATEGORY);
+		// 回避は Shift（しゃがみキー）とジャンプのダブルクリック。こちらは追加の回避キー（初期は未設定）
+		dodge = new KeyMapping("key.buskohunter.dodge", InputConstants.Type.KEYBOARD, InputConstants.UNKNOWN.getValue(), CATEGORY);
 		menu = new KeyMapping("key.buskohunter.menu", InputConstants.Type.KEYBOARD, InputConstants.KEY_H, CATEGORY);
 		camera = new KeyMapping("key.buskohunter.camera", InputConstants.Type.KEYBOARD, InputConstants.KEY_V, CATEGORY);
+		MovementInputUpdateEvent.BUS.addListener(e -> {
+			if (!suppressVanillaMove) return;
+			Input k = e.getInput().keyPresses;
+			e.getInput().keyPresses = new Input(k.forward(), k.backward(), k.left(), k.right(), forceJump > 0, false, k.sprint());
+		});
 		RegisterKeyMappingsEvent.BUS.addListener(e -> {
 			e.register(special);
 			e.register(dodge);
@@ -100,7 +124,10 @@ public final class HunterInput {
 			player.setSprinting(false);
 		}
 
+		if (forceJump > 0) forceJump--;
 		int bits = 0;
+		suppressVanillaMove = holdingWeapon && !screenOpen && !player.isSpectator() && !player.getAbilities().flying
+			&& !player.isInWater() && !player.isInLava() && !player.isPassenger() && !player.onClimbable();
 		if (holdingWeapon && !screenOpen && !player.isSpectator()) {
 			boolean interact = targetingInteractable(mc);
 			int pressA = 0, pressB = 0;
@@ -116,12 +143,60 @@ public final class HunterInput {
 			int pressDodge = 0;
 			while (dodge.consumeClick()) pressDodge++;
 
+			// 回避：Shift を押した瞬間、またはジャンプのダブルクリック
+			boolean shift = mc.options.keyShift.isDown();
+			boolean jump = mc.options.keyJump.isDown();
+			if (suppressVanillaMove) {
+				if (shift && !prevShift) pressDodge++;
+				if (jump && !prevJump) {
+					if (jumpWindow > 0) {
+						pressDodge++;
+						jumpWindow = 0;
+					} else {
+						jumpWindow = JUMP_WINDOW;
+					}
+				} else if (jumpWindow > 0 && --jumpWindow == 0) {
+					// 2 回目が来なかった → 普通のジャンプ
+					forceJump = 2;
+				}
+			} else {
+				jumpWindow = 0;
+			}
+			prevShift = shift;
+			prevJump = jump;
+
+			WeaponType wt = ClientHunter.STATE.weapon;
+			boolean guardWeapon = wt.canGuard;
+			boolean modifierWeapon = wt == WeaponType.LONG_SWORD || wt == WeaponType.HUNTING_HORN
+				|| wt == WeaponType.SWITCH_AXE || wt == WeaponType.LIGHT_BOWGUN || wt == WeaponType.HEAVY_BOWGUN;
+			boolean guardBit = false;
+			if (guardWeapon) {
+				// 右クリック：短く押す＝攻撃（離した時）、長押し＝ガード。ガード中の左・R は派生技
+				if (b && !prevB) {
+					rTicks = 0;
+					rUsed = false;
+				}
+				if (b) rTicks++;
+				if (b && (pressA > 0 || pressS > 0 || (a && !prevA) || (s && !prevS))) rUsed = true;
+				guardBit = b && (rTicks >= GUARD_HOLD || rUsed);
+				if (!b && prevB) {
+					if (!rUsed && rTicks < GUARD_HOLD) bits |= InputKind.PRESS_B;
+					rTicks = 0;
+				} else if (!b && !prevB && pressB > 0) {
+					bits |= InputKind.PRESS_B;
+				}
+			} else {
+				if (b) bits |= InputKind.HELD_B;
+				if (pressB > 0 || (b && !prevB)) bits |= InputKind.PRESS_B;
+				// 右クリックを押したまま左・R で派生技
+				guardBit = modifierWeapon && b && prevB;
+			}
+
 			if (a) bits |= InputKind.HELD_A;
-			if (b) bits |= InputKind.HELD_B;
 			if (s) bits |= InputKind.HELD_S;
-			if (mc.options.keyShift.isDown()) bits |= InputKind.HELD_GUARD;
+			if (guardBit) bits |= InputKind.HELD_GUARD;
+			guardHeldNow = guardBit && guardWeapon;
 			if (pressA > 0 || (a && !prevA)) bits |= InputKind.PRESS_A;
-			if (pressB > 0 || (b && !prevB)) bits |= InputKind.PRESS_B;
 			if (pressS > 0 || (s && !prevS)) bits |= InputKind.PRESS_S;
 			if (pressDodge > 0) bits |= InputKind.PRESS_DODGE;
 			if (mc.options.keyUp.isDown()) bits |= InputKind.DIR_FORWARD;
@@ -134,6 +209,11 @@ public final class HunterInput {
 			prevS = s;
 		} else {
 			prevA = prevB = prevS = false;
+			prevShift = mc.options.keyShift.isDown();
+			prevJump = mc.options.keyJump.isDown();
+			jumpWindow = 0;
+			rTicks = 0;
+			guardHeldNow = false;
 			while (special.consumeClick()) {
 				// 武器を持っていない時の特殊キーは何もしない
 			}
@@ -220,7 +300,7 @@ public final class HunterInput {
 			return mc.level.getBlockState(bh.getBlockPos()).getBlock() instanceof HunterStationBlock;
 		}
 		if (hit instanceof EntityHitResult eh) {
-			return eh.getEntity() instanceof HuntMonster m && m.isCarvable();
+			return (eh.getEntity() instanceof HuntMonster m && m.isCarvable()) || eh.getEntity() instanceof com.buskohunter.entity.HubNpc;
 		}
 		return false;
 	}

@@ -1,6 +1,6 @@
 {
-  "model": {
-    "type": "minecraft:model",
-    "model": "buskohunter:item/proj_sombrero"
-  }
+ "model": {
+  "type": "minecraft:model",
+  "model": "buskohunter:item/proj_sombrero"
+ }
 }

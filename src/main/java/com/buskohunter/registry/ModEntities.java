@@ -34,6 +34,8 @@ public final class ModEntities {
 	public static EntityType<Kinsect> KINSECT;
 	public static EntityType<HuntTrap> HUNT_TRAP;
 	public static EntityType<BarrelBomb> BARREL_BOMB;
+	public static EntityType<com.buskohunter.entity.HubNpc> HUB_NPC;
+	public static EntityType<com.buskohunter.entity.HubLabel> HUB_LABEL;
 	/** EntityAttributeCreationEvent で登録する属性。 */
 	public static final Map<EntityType<? extends LivingEntity>, Supplier<AttributeSupplier>> ATTRIBUTES = new LinkedHashMap<>();
 
@@ -66,5 +68,11 @@ public final class ModEntities {
 			EntityType.Builder.<HuntTrap>of(HuntTrap::new, MobCategory.MISC).sized(1.0f, 0.3f).clientTrackingRange(8));
 		BARREL_BOMB = register("barrel_bomb",
 			EntityType.Builder.<BarrelBomb>of(BarrelBomb::new, MobCategory.MISC).sized(0.8f, 1.0f).clientTrackingRange(8));
+		HUB_NPC = register("hub_npc",
+			EntityType.Builder.<com.buskohunter.entity.HubNpc>of(com.buskohunter.entity.HubNpc::new, MobCategory.MISC).sized(0.6f, 1.95f).clientTrackingRange(10).noSave());
+		ATTRIBUTES.put(HUB_NPC, () -> com.buskohunter.entity.HubNpc.createAttributes().build());
+		HUB_LABEL = register("hub_label",
+			EntityType.Builder.<com.buskohunter.entity.HubLabel>of(com.buskohunter.entity.HubLabel::new, MobCategory.MISC).sized(1.0f, 0.5f)
+				.clientTrackingRange(10).updateInterval(100).noSave());
 	}
 }

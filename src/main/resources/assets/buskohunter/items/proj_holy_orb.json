@@ -1,6 +1,6 @@
 {
-  "model": {
-    "type": "minecraft:model",
-    "model": "buskohunter:item/proj_holy_orb"
-  }
+ "model": {
+  "type": "minecraft:model",
+  "model": "buskohunter:item/proj_holy_orb"
+ }
 }

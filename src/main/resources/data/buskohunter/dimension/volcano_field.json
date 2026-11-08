@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:overworld",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "biome": "buskohunter:hunt_volcano",
+      "features": true,
+      "lakes": false,
+      "structure_overrides": [],
+      "layers": [
+        {
+          "block": "minecraft:bedrock",
+          "height": 1
+        },
+        {
+          "block": "minecraft:stone",
+          "height": 6
+        },
+        {
+          "block": "minecraft:terracotta",
+          "height": 2
+        },
+        {
+          "block": "minecraft:coarse_dirt",
+          "height": 1
+        }
+      ]
+    }
+  }
+}
