@@ -61,8 +61,8 @@ jobs:
           printf "onboardAccessibility:false\ntutorialStep:none\nrenderDistance:6\nsimulationDistance:6\nskipMultiplayerWarning:true\njoinedFirstServer:true\nnarrator:0\n" > run/options.txt
           export LIBGL_ALWAYS_SOFTWARE=1
           set +e
-          xvfb-run -a -s "-screen 0 1280x720x24" bash -c '
-            (i=0; while true; do sleep 5; i=$((i+1)); import -window root -resize 960x540 -quality 60 shots/shot_$(printf %03d $i).jpg 2>/dev/null; done) &
+          xvfb-run -a -s "-screen 0 854x480x24" bash -c '
+            (i=0; while true; do sleep 5; i=$((i+1)); import -window root -quality 70 shots/shot_$(printf %03d $i).jpg 2>/dev/null; done) &
             SHOTS=$!
             BH_AUTOTEST=true timeout 1500 ./gradlew runClient --no-daemon > client.log 2>&1
             echo "client exit $?"

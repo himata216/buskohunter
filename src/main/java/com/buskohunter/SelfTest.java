@@ -11,6 +11,7 @@ import com.buskohunter.registry.ModEntities;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.level.storage.PrimaryLevelData;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
@@ -48,6 +49,8 @@ public final class SelfTest {
 
 	private static void start(MinecraftServer server) {
 		log("start");
+		// CI のクライアントテストで同じワールドを開くとき、実験的設定の警告を出さないようにする
+		if (server.getWorldData() instanceof PrimaryLevelData pld) pld.withConfirmedWarning(true);
 		try {
 			ServerLevel hub = Dims.hub(server);
 			long t0 = System.currentTimeMillis();
