@@ -16,6 +16,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.server.IntegratedServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.function.Consumer;
@@ -102,14 +103,15 @@ public final class ClientAutoTest {
 			default -> {
 			}
 		}
-		// フィールドに着いたら、モンスターを探して近くへ移動
-		if (t >= 900 && !found && t % 40 == 0) {
+		// フィールドに着いたら、モンスターを探して近くの地面へ移動（モンスターの方を向く）
+		if (t >= 900 && t < 2300 && (!found ? t % 40 == 0 : t % 200 == 0)) {
 			onServer(p -> {
 				QuestSession s = QuestManager.INSTANCE.sessionOf(p);
 				if (s == null || s.layout == null) return;
 				ServerLevel level = (ServerLevel) p.level();
 				HuntMonster m = s.monster(level, 0);
 				if (m == null) {
+					if (found) return;
 					Vec3 a = s.layout.areaPos(areaProbe++ % 8);
 					p.teleportTo(a.x, a.y + 1, a.z);
 					log("probe area " + (areaProbe - 1));
@@ -118,11 +120,25 @@ public final class ClientAutoTest {
 				Vec3 dir = p.position().subtract(m.position()).multiply(1, 0, 1);
 				if (dir.lengthSqr() < 1) dir = new Vec3(1, 0, 0);
 				dir = dir.normalize();
-				Vec3 at = m.position().add(dir.scale(m.getBbWidth() + 8));
-				p.teleportTo(at.x, m.getY() + 0.5, at.z);
+				Vec3 at = m.position().add(dir.scale(m.getBbWidth() * 0.5 + 7));
+				int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (int) Math.floor(at.x), (int) Math.floor(at.z));
+				double dx = m.getX() - at.x, dz = m.getZ() - at.z;
+				float yaw = (float) (Math.toDegrees(Math.atan2(dz, dx)) - 90.0);
+				p.connection.teleport(at.x, y, at.z, yaw, 10f);
+				if (!found) log("found monster " + m.getType().toShortString() + " hp " + m.hp());
 				found = true;
-				log("found monster " + m.getType().toShortString() + " hp " + m.hp());
 			});
+		}
+		// 武器をホットバーで持つ（クエスト中は三人称になる）
+		if (t == 880 && mc.player != null) {
+			var inv = mc.player.getInventory();
+			for (int i = 0; i < 9; i++) {
+				if (inv.getItem(i).getItem() instanceof com.buskohunter.item.HunterWeaponItem) {
+					inv.setSelectedSlot(i);
+					log("hold weapon slot " + i);
+					break;
+				}
+			}
 		}
 		// 攻撃（A 連打・ときどき特殊・回避）
 		if (found && t < 2000 && mc.player != null) {
@@ -148,7 +164,10 @@ public final class ClientAutoTest {
 				QuestSession s = QuestManager.INSTANCE.sessionOf(p);
 				if (s == null) return;
 				HuntMonster m = s.monster((ServerLevel) p.level(), 0);
-				if (m != null) p.teleportTo(m.getX() + m.getBbWidth() + 2, m.getY() + 0.5, m.getZ());
+				if (m != null) {
+					int y = p.level().getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (int) (m.getX() + m.getBbWidth()), (int) m.getZ());
+					p.connection.teleport(m.getX() + m.getBbWidth(), y, m.getZ(), 90f, 20f);
+				}
 			});
 		}
 		if (t == 3200) {

@@ -62,7 +62,7 @@ jobs:
           export LIBGL_ALWAYS_SOFTWARE=1
           set +e
           xvfb-run -a -s "-screen 0 854x480x24" bash -c '
-            (i=0; while true; do sleep 5; i=$((i+1)); import -window root -quality 70 shots/shot_$(printf %03d $i).jpg 2>/dev/null; done) &
+            (i=0; while true; do sleep 3; i=$((i+1)); import -window root -quality 70 shots/shot_$(printf %03d $i).jpg 2>/dev/null; done) &
             SHOTS=$!
             BH_AUTOTEST=true timeout 1500 ./gradlew runClient --no-daemon > client.log 2>&1
             echo "client exit $?"
