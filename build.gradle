@@ -26,6 +26,8 @@ minecraft {
         register('client')
         register('server') {
             args '--nogui'
+            // CI の自己診断（普段は false）
+            systemProperty 'buskohunter.selftest', System.getenv('BH_SELFTEST') ?: 'false'
         }
     }
 }

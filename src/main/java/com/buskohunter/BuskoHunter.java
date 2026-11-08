@@ -56,6 +56,7 @@ public final class BuskoHunter {
 		ModNetworking.init();
 		ModCommands.init();
 		ServerEvents.init();
+		SelfTest.init();
 
 		if (FMLEnvironment.dist == Dist.CLIENT) {
 			com.buskohunter.client.BuskoHunterClient.init();

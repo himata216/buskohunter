@@ -35,6 +35,19 @@ jobs:
           tail -n 80 build.log
           exit 0
 
+      - name: Server self-test
+        id: selftest
+        if: steps.build.outputs.exit == '0'
+        run: |
+          mkdir -p run
+          echo "eula=true" > run/eula.txt
+          set +e
+          BH_SELFTEST=true timeout 1500 ./gradlew runServer --no-daemon > server.log 2>&1
+          echo "server exit $?"
+          if grep -q "\[SELFTEST\] RESULT OK" server.log; then echo "ok=1" >> "$GITHUB_OUTPUT"; else echo "ok=0" >> "$GITHUB_OUTPUT"; fi
+          grep -n -E "SELFTEST|ERROR|Exception|Caused by|WARN.*buskohunter" server.log | head -n 400
+          exit 0
+
       - name: Publish results to ci-results branch
         if: always()
         env:
@@ -42,9 +55,12 @@ jobs:
         run: |
           mkdir -p ci-out
           cp build.log ci-out/ || true
+          cp server.log ci-out/ 2>/dev/null || true
+          grep -n -E "SELFTEST|ERROR|Exception|Caused by|WARN.*buskohunter" server.log 2>/dev/null | head -n 600 > ci-out/server_summary.txt || true
           grep -n -E "error:|warning: \[|FAILURE|BUILD (SUCCESSFUL|FAILED)|What went wrong|Exception" build.log | head -n 400 > ci-out/summary.txt || true
           echo "commit=${GITHUB_SHA}" > ci-out/status.txt
           echo "exit=${{ steps.build.outputs.exit }}" >> ci-out/status.txt
+          echo "selftest=${{ steps.selftest.outputs.ok }}" >> ci-out/status.txt
           if ls build/libs/*.jar >/dev/null 2>&1; then cp build/libs/*.jar ci-out/; fi
           cd ci-out
           git init -q -b ci-results
@@ -59,7 +75,7 @@ jobs:
         run: exit 1
 
       - name: Release jar
-        if: steps.build.outputs.exit == '0'
+        if: steps.build.outputs.exit == '0' && steps.selftest.outputs.ok == '1'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
